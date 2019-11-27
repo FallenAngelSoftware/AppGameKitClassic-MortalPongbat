@@ -14,8 +14,8 @@ function SetupForNewGame()
 
 	BallScreenX = ScreenWidth/2
 	BallScreenY = ScreenHeight/2
-	BallMovementX = -1
-	BallMovementY = -1
+	BallMovementX = -5
+	BallMovementY = -5
 
 	BallStillColliding = FALSE
 
@@ -24,14 +24,37 @@ endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
+function MoveBallWithCollisionDetection()
+	inc BallScreenX, BallMovementX	
+	inc BallScreenY, BallMovementY
+	
+	if (BallScreenX < 13)
+		BallMovementX = BallMovementX * -1
+	elseif ( BallScreenX > (360-13) )
+		BallMovementX = BallMovementX * -1
+	endif
+	
+	if (BallScreenY < 30)
+		BallMovementY = BallMovementY * -1
+	elseif ( BallScreenY > (640-30) )
+		BallMovementY = BallMovementY * -1
+	endif
+endfunction
+
+//------------------------------------------------------------------------------------------------------------
+
 function RunGameplayCore()
 	if (Platform <> Android and Platform <> iOS)
 		if ( JoystickDirection = JoyLEFT and PaddleScreenX[0] > (40) )
+			PaddleDestinationDir[0] = JoyLEFT
 			dec PaddleScreenX[0], 5
 			SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
 		elseif ( JoystickDirection = JoyRIGHT and PaddleScreenX[0] < (360-40) )
+			PaddleDestinationDir[0] = JoyRIGHT
 			inc PaddleScreenX[0], 5
 			SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
+		else
+			PaddleDestinationDir[0] = JoyCENTER
 		endif
 		
 		if (MouseButtonLeft = ON)
@@ -146,63 +169,13 @@ function RunGameplayCore()
 		endif
 	next index
 		
-	if (BallMovementY = -1)
-		dec BallScreenY, 2
-		
-		if (BallScreenY < 30)
-			BallMovementY = 1
-		endif
-	elseif (BallMovementY = 1)
-		inc BallScreenY, 2
-		
-		if ( BallScreenY > (640-30) )
-			BallMovementY = -1
-		endif
-	endif
+	MoveBallWithCollisionDetection ( )
 	
-	if (BallMovementX = -1)
-		dec BallScreenX, 2
-		
-		if (BallScreenX < 13)
-			BallMovementX = 1
-		endif
-	elseif (BallMovementX = 1)
-		inc BallScreenX, 2
-		
-		if ( BallScreenX > (360-13) )
-			BallMovementX = -1
-		endif
-	endif
 	SetSpritePositionByOffset( BallSprite, BallScreenX, BallScreenY )
 
 	if (BallStillColliding = TRUE)
-		if (BallMovementY = -1)
-			dec BallScreenY, 2
-			
-			if (BallScreenY < 30)
-				BallMovementY = 1
-			endif
-		elseif (BallMovementY = 1)
-			inc BallScreenY, 2
-			
-			if ( BallScreenY > (640-30) )
-				BallMovementY = -1
-			endif
-		endif
+		MoveBallWithCollisionDetection ( )
 		
-		if (BallMovementX = -1)
-			dec BallScreenX, 2
-			
-			if (BallScreenX < 13)
-				BallMovementX = 1
-			endif
-		elseif (BallMovementX = 1)
-			inc BallScreenX, 2
-			
-			if ( BallScreenX > (360-13) )
-				BallMovementX = -1
-			endif
-		endif
 		SetSpritePositionByOffset( BallSprite, BallScreenX, BallScreenY )
 		
 		if ( BallScreenY > (ScreenHeight/2) and GetSpriteCollision(BallSprite, PaddleSprite[0]) <> 1 ) then BallStillColliding = FALSE
@@ -210,16 +183,30 @@ function RunGameplayCore()
 	elseif (BallStillColliding = FALSE)
 		for index = 0 to 1
 			If ( BallStillColliding = FALSE and GetSpriteCollision(BallSprite, PaddleSprite[index]) = 1 )
-				if (BallMovementX = -1)
-					BallMoveMentX = 1
+				if (BallMovementX < 0)
+					BallMoveMentX = BallMovementX * -1
 				else
-					BallMoveMentX = -1
+					BallMoveMentX = BallMovementX * -1
 				endif
 				
-				if (BallMovementY = -1)
-					BallMovementY = 1
+				if (BallMovementY < 0)
+					BallMovementY = BallMovementY * -1
 				else
-					BallMovementY = -1
+					BallMovementY = BallMovementY * -1
+				endif
+				
+				if ( BallScreenY > (ScreenHeight/2) )
+					if (PaddleDestinationDir[0] = JoyLEFT)
+						dec BallMovementX, 1
+					elseif (PaddleDestinationDir[0] = JoyRIGHT)
+						inc BallMovementX, 1
+					endif
+				elseif ( BallScreenY < (ScreenHeight/2) )
+					if (PaddleDestinationDir[1] = JoyLEFT)
+						dec BallMovementX, 1
+					elseif (PaddleDestinationDir[1] = JoyRIGHT)
+						inc BallMovementX, 1
+					endif
 				endif
 				
 				BallStillColliding = TRUE
