@@ -1241,9 +1241,15 @@ endfunction
 
 function DisplayPlayingScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
-		ClearScreenWithColor ( 50, 50, 50 )
+		ClearScreenWithColor ( 0, 0, 0 )
 
 		SetupForNewGame ( )
+
+		LoadImage ( 11100, "\media\images\playing\BoardBG.png" )
+		BoardBG = CreateSprite ( 11100 )
+		SetSpriteOffset( BoardBG, (GetSpriteWidth(BoardBG)/2) , (GetSpriteHeight(BoardBG)/2) ) 
+		SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+		SetSpriteDepth ( BoardBG, 4 )
 		
 		LoadImage ( 11150, "\media\images\playing\PaddleBlue.png" )
 		PaddleSprite[0] = CreateSprite ( 11150 )
@@ -1263,18 +1269,18 @@ function DisplayPlayingScreen( )
 		SetSpritePositionByOffset( BallSprite, BallScreenX, BallScreenY )
 		SetSpriteDepth ( BallSprite, 3 )
 
-		SetSyncRate( 60, 0 )
+		SetSyncRate( 60, 1 )
 	endif
 
 	RunGameplayCore ( )
 		
 	if FadingToBlackCompleted = TRUE
-
+		SetSyncRate( 30, 1 )
+		
+		DeleteImage(11100)
 		DeleteImage(11150)
 		DeleteImage(11175)
 		DeleteImage(11200)
-
-		SetSyncRate( 30, 0 )
 	endif
 endfunction
 
@@ -1332,7 +1338,7 @@ function DisplayNewHighScoreNameInputScreen ( )
 
 		NextScreenToDisplay = HighScoresScreen
 
-CurrentIconBeingPressed = -1
+		CurrentIconBeingPressed = -1
 
 		ScreenIsDirty = TRUE
 	endif

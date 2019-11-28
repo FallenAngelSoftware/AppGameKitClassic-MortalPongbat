@@ -29,21 +29,43 @@ function MoveBallWithCollisionDetection()
 	inc BallScreenY, BallMovementY
 	
 	if (BallScreenX < 13)
+		BallScreenX = 13
 		BallMovementX = BallMovementX * -1
+		PlaySoundEffect(2)				
 	elseif ( BallScreenX > (360-13) )
+		BallScreenX = (360-13)
 		BallMovementX = BallMovementX * -1
+		PlaySoundEffect(2)				
 	endif
 	
 	if (BallScreenY < 30)
+		BallScreenY = 30
 		BallMovementY = BallMovementY * -1
+		PlaySoundEffect(2)				
 	elseif ( BallScreenY > (640-30) )
+		BallScreenY = (640-30)
 		BallMovementY = BallMovementY * -1
+		PlaySoundEffect(2)				
 	endif
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
 function RunGameplayCore()
+	if (PerformancePercent > 1)
+		if (BallMovementX < 0)
+			BallMovementX = -5 * PerformancePercent
+		elseif (BallMovementX > 0)
+			BallMovementX = 5 * PerformancePercent
+		endif
+			
+		if (BallMovementY < 0)
+			BallMovementY = -5 * PerformancePercent
+		elseif (BallMovementY > 0)
+			BallMovementY = 5 * PerformancePercent
+		endif
+	endif
+
 	if (Platform <> Android and Platform <> iOS)
 		if ( JoystickDirection = JoyLEFT and PaddleScreenX[0] > (40) )
 			PaddleDestinationDir[0] = JoyLEFT
@@ -178,17 +200,14 @@ function RunGameplayCore()
 		
 		SetSpritePositionByOffset( BallSprite, BallScreenX, BallScreenY )
 		
-		if ( BallScreenY > (ScreenHeight/2) and GetSpriteCollision(BallSprite, PaddleSprite[0]) <> 1 ) then BallStillColliding = FALSE
-		if ( BallScreenY < (ScreenHeight/2) and GetSpriteCollision(BallSprite, PaddleSprite[1]) <> 1 ) then BallStillColliding = FALSE
+		if ( BallScreenY > (ScreenHeight/2) and GetSpriteCollision(BallSprite, PaddleSprite[0]) <> 1 )
+			BallStillColliding = FALSE
+		elseif ( BallScreenY < (ScreenHeight/2) and GetSpriteCollision(BallSprite, PaddleSprite[1]) <> 1 )
+			BallStillColliding = FALSE
+		endif
 	elseif (BallStillColliding = FALSE)
 		for index = 0 to 1
 			If ( BallStillColliding = FALSE and GetSpriteCollision(BallSprite, PaddleSprite[index]) = 1 )
-				if (BallMovementX < 0)
-					BallMoveMentX = BallMovementX * -1
-				else
-					BallMoveMentX = BallMovementX * -1
-				endif
-				
 				if (BallMovementY < 0)
 					BallMovementY = BallMovementY * -1
 				else
@@ -197,18 +216,39 @@ function RunGameplayCore()
 				
 				if ( BallScreenY > (ScreenHeight/2) )
 					if (PaddleDestinationDir[0] = JoyLEFT)
-						dec BallMovementX, 1
+						if (BallMovementX < 0)
+							dec BallMovementX, 1
+						elseif (BallMovementX > 0)
+							BallMovementX = BallMovementX * -1
+							dec BallMovementX, 1	
+						endif
 					elseif (PaddleDestinationDir[0] = JoyRIGHT)
-						inc BallMovementX, 1
+						if (BallMovementX > 0)
+							inc BallMovementX, 1
+						elseif (BallMovementX < 0)
+							BallMovementX = BallMovementX * -1
+							inc BallMovementX, 1	
+						endif
 					endif
 				elseif ( BallScreenY < (ScreenHeight/2) )
 					if (PaddleDestinationDir[1] = JoyLEFT)
-						dec BallMovementX, 1
+						if (BallMovementX < 0)
+							dec BallMovementX, 1
+						elseif (BallMovementX > 0)
+							BallMovementX = BallMovementX * -1
+							dec BallMovementX, 1	
+						endif
 					elseif (PaddleDestinationDir[1] = JoyRIGHT)
-						inc BallMovementX, 1
+						if (BallMovementX > 0)
+							inc BallMovementX, 1
+						elseif (BallMovementX < 0)
+							BallMovementX = BallMovementX * -1
+							inc BallMovementX, 1	
+						endif
 					endif
 				endif
 				
+				PlaySoundEffect(2)				
 				BallStillColliding = TRUE
 			endif
 		next index

@@ -69,7 +69,7 @@ function GetAllUserInput ( )
 
 	select LastKeyboardChar
 		case 32:
-			if (ScreenToDisplay = PlayingScreen)
+/*			if (ScreenToDisplay = PlayingScreen)
 				if (GamePaused = -1)
 					GamePaused = 50
 
@@ -96,7 +96,7 @@ function GetAllUserInput ( )
 					SetSpriteDepth ( Icon[5], 2 )
 					ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex]) 
 				endif		
-			endif
+			endif */
 		endcase
 		case 38:
 			JoystickDirection = JoyUP

@@ -11,7 +11,7 @@ remstart
           / \/ \(  O ))   /  )( /    \/ (_/\   ) __/(  O )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.10         TURBO!
+                                     Retail1 110% - v0.0.14         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.10''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.14''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_10.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_14.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_10-"
+HTML5DataVersion = "MP-v0_0_14-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -383,12 +383,8 @@ SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[
 global HowToPlayLegend as integer
 global HowToPlayFingerTouch as integer[4]
 
-
-
-
-
-
-
+//==========================================
+global BoardBG as integer
 
 global PaddleSprite as integer[2]
 global PaddleScreenX as float[2]
@@ -403,14 +399,7 @@ global BallMovementX as float
 global BallMovementY as float
 
 global BallStillColliding as integer
-
-
-
-
-
-
-
-
+//==========================================
 
 global PlayerLostALife as integer
 PlayerLostALife = FALSE
@@ -748,19 +737,7 @@ do
 	roundedFPS = Round( ScreenFPS() )
 
 	if (roundedFPS > 0)
-		if (ScreenToDisplay = PlayingScreen)
-			if (PlayingSyncRate = 20)
-				PerformancePercent = (20 / roundedFPS)
-			elseif (PlayingSyncRate = 30)
-				PerformancePercent = (30 / roundedFPS)
-			elseif (PlayingSyncRate = 45)
-				PerformancePercent = (45 / roundedFPS)
-			elseif (PlayingSyncRate = 60)
-				PerformancePercent = (60 / roundedFPS)
-			endif
-		elseif (PlayingSyncRate = 30)
-			PerformancePercent = (30 / roundedFPS)
-		endif
+		PerformancePercent = (30 / roundedFPS)
 	else
 		PerformancePercent = 1
 	endif
@@ -802,13 +779,17 @@ do
 		
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
 		Print ( "FPS="+str(roundedFPS) )
-		print ( "Per%"+str(PerformancePercent) )
+		print ( "Perf%"+str(PerformancePercent) )
 
 		for index = 0 to 1
-			print ( "T1X"+str(1+index)+":"+str(TapCurrentX[index])+"/T1Y"+str(1+index)+":"+str(TapCurrentY[index]) )
+			print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
 		next index
-		
-		print ( "BallCollide:"+str(BallStillColliding) )
+				
+		if (BallStillColliding = FALSE)
+			print ( "Collide=FALSE" )
+		elseif (BallStillColliding = TRUE)
+			print ( "Collide=TRUE" )
+		endif
 	endif
 
 	if (ScreenIsDirty = TRUE)

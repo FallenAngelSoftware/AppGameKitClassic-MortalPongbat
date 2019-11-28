@@ -3,7 +3,10 @@
 function LoadAllSoundEffects ( )
 	SoundEffect[ 0] = LoadSoundOGG("\media\sound\MenuMove.ogg")
 	SoundEffect[ 1] = LoadSoundOGG("\media\sound\MenuClick.ogg")
-	SoundEffect[ 2] = LoadSoundOGG("\media\sound\Burp.ogg")
+	
+	SoundEffect[ 2] = LoadSoundOGG("\media\sound\BallHit.ogg")
+	
+//	SoundEffect[ 2] = LoadSoundOGG("\media\sound\Burp.ogg")
 	SoundEffect[ 3] = LoadSoundOGG("\media\sound\Thrust.ogg")
 	SoundEffect[ 4] = LoadSoundOGG("\media\sound\MoveSelector.ogg")
 	SoundEffect[ 5] = LoadSoundOGG("\media\sound\SwapPieces.ogg")
