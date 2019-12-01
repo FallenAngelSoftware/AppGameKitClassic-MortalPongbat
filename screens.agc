@@ -1,7 +1,7 @@
 // "screens.agc"...
 
 function SetDelayAllUserInput()
-	DelayAllUserInput = 5
+	DelayAllUserInput = 20
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -355,6 +355,7 @@ function DisplayTitleScreen( )
 //		else
 //			NextScreenToDisplay = IntroSceneScreen
 //		endif
+		SetupForNewGame ( )
 		ScreenFadeStatus = FadingToBlack
 	elseif ThisButtonWasPressed(1) = TRUE
 		NextScreenToDisplay = OptionsScreen
@@ -385,6 +386,7 @@ function DisplayTitleScreen( )
 		MusicPlayerScreenIndex = 0
 
 		NextScreenToDisplay = MusicPlayerScreen
+		DelayAllUserInput = 50
 		ScreenFadeStatus = FadingToBlack
 	endif
 
@@ -1068,7 +1070,8 @@ endfunction
 
 function DisplayAboutScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
-		SetDelayAllUserInput()
+//		SetDelayAllUserInput()
+		DelayAllUserInput = 50
 
 		ClearScreenWithColor ( 0, 0, 0 )
 
@@ -1086,7 +1089,7 @@ function DisplayAboutScreen( )
 
 		AboutScreenFPSY = -200
 
-		multiplier = 3
+		multiplier = 1.5
 
 		ScreenIsDirty = TRUE
 	endif
@@ -1098,7 +1101,7 @@ function DisplayAboutScreen( )
 	endif
 
 	if (PerformancePercent > 1)
-		multiplier = 3 * PerformancePercent
+		multiplier = 1.5 * PerformancePercent
 	endif
 
 	if (ScreenFadeStatus = FadingIdle)
@@ -1243,7 +1246,7 @@ function DisplayPlayingScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 		ClearScreenWithColor ( 0, 0, 0 )
 
-		SetupForNewGame ( )
+//		SetupForNewGame ( )
 
 		LoadImage ( 11100, "\media\images\playing\BoardBG.png" )
 		BoardBG = CreateSprite ( 11100 )
@@ -1251,36 +1254,62 @@ function DisplayPlayingScreen( )
 		SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
 		SetSpriteDepth ( BoardBG, 4 )
 		
-		LoadImage ( 11150, "\media\images\playing\PaddleBlue.png" )
+		LoadImage ( 11150, "\media\images\playing\Paddle.png" )
 		PaddleSprite[0] = CreateSprite ( 11150 )
 		SetSpriteOffset( PaddleSprite[0], (GetSpriteWidth(PaddleSprite[0])/2) , (GetSpriteHeight(PaddleSprite[0])/2) ) 
 		SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
 		SetSpriteDepth ( PaddleSprite[0], 3 )
+		SetSpriteColorRed(PaddleSprite[0], 255)
+		SetSpriteColorGreen(PaddleSprite[0], 255)
+		SetSpriteColorBlue(PaddleSprite[0], 255)
 		
-		LoadImage ( 11175, "\media\images\playing\PaddleRed.png" )
+		LoadImage ( 11175, "\media\images\playing\Paddle.png" )
 		PaddleSprite[1] = CreateSprite ( 11175 )
 		SetSpriteOffset( PaddleSprite[1], (GetSpriteWidth(PaddleSprite[1])/2) , (GetSpriteHeight(PaddleSprite[1])/2) ) 
 		SetSpritePositionByOffset( PaddleSprite[1], PaddleScreenX[1], PaddleScreenY[1] )
 		SetSpriteDepth ( PaddleSprite[1], 3 )
+		SetSpriteColorRed(PaddleSprite[1], 158)
+		SetSpriteColorGreen(PaddleSprite[1], 158)
+		SetSpriteColorBlue(PaddleSprite[1], 158)
 		
 		LoadImage ( 11200, "\media\images\playing\Ball.png" )
-		BallSprite = CreateSprite ( 11200 )
-		SetSpriteOffset( BallSprite, (GetSpriteWidth(BallSprite)/2) , (GetSpriteHeight(BallSprite)/2) ) 
-		SetSpritePositionByOffset( BallSprite, BallScreenX, BallScreenY )
-		SetSpriteDepth ( BallSprite, 3 )
+		index as integer
+		for index = 0 to 1
+			BallSprite[index] = CreateSprite ( 11200 )
+			SetSpriteOffset( BallSprite[index], (GetSpriteWidth(BallSprite[index])/2) , (GetSpriteHeight(BallSprite[index])/2) ) 
+			SetSpritePositionByOffset( BallSprite[index], BallScreenX[index], BallScreenY[index] )
+			SetSpriteDepth ( BallSprite[index], 3 )
+			
+			if (index = 0)
+				SetSpriteColorRed(BallSprite[index], 255)
+				SetSpriteColorGreen(BallSprite[index], 255)
+				SetSpriteColorBlue(BallSprite[index], 255)
+			elseif (index = 1)
+				SetSpriteColorRed(BallSprite[index], 158)
+				SetSpriteColorGreen(BallSprite[index], 158)
+				SetSpriteColorBlue(BallSprite[index], 158)
+			endif
+			
+		next index
 
-		SetSyncRate( 60, 1 )
+		LoadImage ( 11250, "\media\images\playing\Wall.png" )
+
+		SetupLevel ( )
+
+		
+//		SetSyncRate( 60, 1 )
 	endif
 
 	RunGameplayCore ( )
 		
 	if FadingToBlackCompleted = TRUE
-		SetSyncRate( 30, 1 )
+//		SetSyncRate( 30, 1 )
 		
 		DeleteImage(11100)
 		DeleteImage(11150)
 		DeleteImage(11175)
 		DeleteImage(11200)
+		DeleteImage(11250)
 	endif
 endfunction
 

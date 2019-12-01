@@ -11,7 +11,7 @@ remstart
           / \/ \(  O ))   /  )( /    \/ (_/\   ) __/(  O )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.15         TURBO!
+                                     Retail1 110% - v0.0.17         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.15''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.17''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_15.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_17.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_15-"
+HTML5DataVersion = "MP-v0_0_17-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -81,15 +81,16 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 		Platform = iOS
 	endif
 
-	SetSyncRate( 30, 0 )
+	SetSyncRate( 60, 0 )
 	SetScissor( 0,0,0,0 )
 	OnMobile = TRUE
 	ShowCursor = FALSE
 else
 	Platform = Web
 	if (MaximumFrameRate = 0)
-		SetSyncRate( 30, 1 )
-	else
+//		SetSyncRate( 30, 1 )
+		SetVSync( 1 )
+ 	else
 		SetSyncRate( 0, 1 )
 	endif
 	SetScissor( 0, 1, ScreenWidth, ScreenHeight )
@@ -392,13 +393,16 @@ global PaddleScreenY as float[2]
 global PaddleDestinationX as float[2]
 global PaddleDestinationDir as float[2]
 
-global BallSprite as integer
-global BallScreenX as float
-global BallScreenY as float
-global BallMovementX as float
-global BallMovementY as float
+global BallSprite as integer[2]
+global BallScreenX as float[2]
+global BallScreenY as float[2]
+global BallMovementX as float[2]
+global BallMovementY as float[2]
 
-global BallStillColliding as integer
+global BallStillColliding as integer[2]
+
+global WallSprite as integer[10, 11]
+global WallTotal as integer
 //==========================================
 
 global PlayerLostALife as integer
@@ -623,6 +627,18 @@ FramesPerSecond = 30
 LoadOptionsAndHighScores()
 SetVolumeOfAllMusicAndSoundEffects()
 
+if (Platform = Web)
+	major as integer
+	minor as integer
+	for major = 0 to 99
+		for minor = 0 to 99
+			DeleteSharedVariable( "MP-v0_"+str(major)+"_"+str(minor)+ "-" ) 
+		next minor
+	next major
+endif
+
+SaveOptionsAndHighScores()
+
 if (DEBUG = TRUE)
 	SecretCode[0] = 2
 	SecretCode[1] = 7
@@ -645,7 +661,7 @@ global CurrentIconBeingPressed as integer
 CurrentIconBeingPressed = -1
 global CurrentKeyboardKeyPressed as integer
 CurrentKeyboardKeyPressed = -1
-
+//Platform = Android
 global Tap as integer[2]
 global TapStartX as integer[2]
 global TapStartY as integer[2]
@@ -737,7 +753,7 @@ do
 	roundedFPS = Round( ScreenFPS() )
 
 	if (roundedFPS > 0)
-		PerformancePercent = (30 / roundedFPS)
+		PerformancePercent = (60 / roundedFPS)
 	else
 		PerformancePercent = 1
 	endif
@@ -784,12 +800,9 @@ do
 		for index = 0 to 1
 			print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
 		next index
-				
-		if (BallStillColliding = FALSE)
-			print ( "Collide=FALSE" )
-		elseif (BallStillColliding = TRUE)
-			print ( "Collide=TRUE" )
-		endif
+
+		print ( "Ball0:"+str(BallMovementX[0]) )
+		print ( "Ball1:"+str(BallMovementX[1]) )				
 	endif
 
 	if (ScreenIsDirty = TRUE)
