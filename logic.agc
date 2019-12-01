@@ -138,7 +138,7 @@ endfunction
 
 function RunGameplayCore()
 	index as integer
-	if (PerformancePercent > 1)
+/*	if (PerformancePercent > 1)
 		for index = 0 to 1
 			if (BallMovementX[index] < 0)
 				BallMovementX[index] = -5 * PerformancePercent
@@ -153,7 +153,7 @@ function RunGameplayCore()
 			endif
 		next index
 	endif
-
+*/
 	if (Platform <> Android and Platform <> iOS)
 		if ( JoystickDirection = JoyLEFT and PaddleScreenX[0] > (40) )
 			PaddleDestinationDir[0] = JoyLEFT
