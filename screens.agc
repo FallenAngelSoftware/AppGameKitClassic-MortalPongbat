@@ -1,7 +1,7 @@
 // "screens.agc"...
 
 function SetDelayAllUserInput()
-	DelayAllUserInput = 20
+	DelayAllUserInput = (20 / PerformancePercent)
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -93,16 +93,16 @@ function DisplaySteamOverlayScreen( )
 		SetSpriteOffset( BlackBG, (GetSpriteWidth(BlackBG)/2) , (GetSpriteHeight(BlackBG)/2) ) 
 		SetSpritePositionByOffset( BlackBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "TM", 999, 8, 255, 255, 255, 255, 90, 90, 90, 0, 180+110, 23-14, 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "''Space Swap 110%''", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29, 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Copyright 2019 By Fallen Angel Software", 999, 18, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29+25, 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 18, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29+25+25, 3 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "TM", 999, 8, 255, 255, 255, 255, 90, 90, 90, 0, 180+110, 23-14, 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "''Space Swap 110%''", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29, 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Copyright 2019 By Fallen Angel Software", 999, 18, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29+25, 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 18, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, 29+25+25, 3, 0 )
 
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Loading Now!", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight*.25, 3 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Loading Now!", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight*.25, 3, 0 )
 
-		LoadPercentText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 150, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight/2, 3)
+		LoadPercentText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 150, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight/2, 3, 0)
 
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Please Wait!", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight*.75, 3 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Please Wait!", 999, 30, 255, 255, 255, 255, 90, 90, 90, 1, ScreenWidth/2, ScreenHeight*.75, 3, 0 )
 
 		ScreenDisplayTimer = 275
 		NextScreenToDisplay = AppGameKitScreen
@@ -145,10 +145,10 @@ function DisplayAppGameKitScreen( )
 		SetSpriteOffset( AppGameKitLogo, (GetSpriteWidth(AppGameKitLogo)/2) , (GetSpriteHeight(AppGameKitLogo)/2) ) 
 		SetSpritePositionByOffset( AppGameKitLogo, ScreenWidth/2, (ScreenHeight/2) )
 		
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''The Best $79.99 We Ever Spent On A Game Engine!''", 999, 13, 255, 255, 255, 255, 50, 50, 50, 1, ScreenWidth/2, (ScreenHeight/2)-220, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''The Fallen Angel''", 999, 13, 255, 255, 255, 255, 50, 50, 50, 1, ScreenWidth/2, (ScreenHeight/2)-220+30, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''The Best $79.99 We Ever Spent On A Game Engine!''", 999, 13, 255, 255, 255, 255, 50, 50, 50, 1, ScreenWidth/2, (ScreenHeight/2)-220, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''The Fallen Angel''", 999, 13, 255, 255, 255, 255, 50, 50, 50, 1, ScreenWidth/2, (ScreenHeight/2)-220+30, 3, 0)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "www.AppGameKit.com", 999, 40, 255, 255, 255, 255, 171, 0, 62, 1, ScreenWidth/2, ScreenHeight-40, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "www.AppGameKit.com", 999, 40, 255, 255, 255, 255, 171, 0, 62, 1, ScreenWidth/2, ScreenHeight-40, 3, 0)
 		
 		ScreenDisplayTimer = 200
 		NextScreenToDisplay = SixteenBitSoftScreen
@@ -200,7 +200,7 @@ function DisplaySixteenBitSoftScreen( )
 		SetSpriteScaleByOffset( SixteenBitSoftLogo, .65, .65 )
 		SetSpritePositionByOffset( SixteenBitSoftLogo, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, ScreenHeight-22, 3)
+		CreateAndInitializeOutlinedText(FALSE, CurrentMinTextIndex, "www.FallenAngelSoftware.com", 999, 25, 0, 255, 0, 255, 0, 128, 0, 1, ScreenWidth/2, ScreenHeight-22, 3, 0)
 		
 		ScreenDisplayTimer = 200
 		NextScreenToDisplay = TitleScreen
@@ -254,7 +254,7 @@ function DisplayTitleScreen( )
 		offsetY as integer
 		offsetY = 10
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, GameVersion, 999, 16, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 21-3, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, GameVersion, 999, 16, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 21-3, 3, 0)
 
 		LoadImage ( 35, "\media\images\logos\Logo.png" )
 		MP110Logo = CreateSprite ( 35 )
@@ -280,8 +280,8 @@ function DisplayTitleScreen( )
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 105+offsetY+13+5+28-22 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 255, 255)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''"+HighScoreName [ GameMode, 0 ]+"''", 999, 19, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 125+offsetY+13+5+28-18, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreScore [ GameMode, 0 ]), 999, 19, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 125+21+offsetY+13+5+28-9, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''"+HighScoreName [ GameMode, 0 ]+"''", 999, 19, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 125+offsetY+13+5+28-18, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreScore [ GameMode, 0 ]), 999, 19, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 125+21+offsetY+13+5+28-9, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[1], ScreenWidth/2, 165+offsetY+13+3+28-5 )
 		SetSpriteColor(ScreenLine[1], 255, 255, 255, 255)
@@ -308,7 +308,7 @@ function DisplayTitleScreen( )
 		SetSpritePositionByOffset( ScreenLine[3], ScreenWidth/2, ScreenHeight-40+offsetY-15+13-9 )
 		SetSpriteColor(ScreenLine[3], 255, 255, 255, 255)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "©2020 By www.FallenAngelSoftware.com", 999, 16, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "©2020 By www.FallenAngelSoftware.com", 999, 16, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, ScreenHeight-25+13-5, 3, 0)
 
 		if (SecretCodeCombined = 5432 or SecretCodeCombined = 5431) then CreateIcon(6, 360-17, 17)
 		
@@ -406,14 +406,14 @@ function DisplayOptionsScreen( )
 		LoadSelectedBackground()
 		SetSpritePositionByOffset( TitleBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''O P T I O N S''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''O P T I O N S''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 
 		CreateArrowSet(75-17)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Music Volume:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 75-17, 3)
-		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 75-17, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Music Volume:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 75-17, 3, 0)
+		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 75-17, 3, 0)
 		if MusicVolume = 100
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "100%" )
 		elseif MusicVolume = 75
@@ -427,8 +427,8 @@ function DisplayOptionsScreen( )
 		endif
 
 		CreateArrowSet(75+44-17)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Effects Volume:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 75+44-17, 3)
-		ArrowSetTextStringIndex[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 75+44-17, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Effects Volume:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 75+44-17, 3, 0)
+		ArrowSetTextStringIndex[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 75+44-17, 3, 0)
 		if EffectsVolume = 100
 			SetTextStringOutlined ( ArrowSetTextStringIndex[1], "100%" )
 		elseif EffectsVolume = 75
@@ -445,8 +445,8 @@ function DisplayOptionsScreen( )
 		SetSpriteColor(ScreenLine[1], 255, 255, 255, 255)
 
 		CreateArrowSet(180-19)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Game Mode:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 180-19, 3)
-		ArrowSetTextStringIndex[2] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 180-19, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Game Mode:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 180-19, 3, 0)
+		ArrowSetTextStringIndex[2] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 180-19, 3, 0)
 		if GameMode = ChildStoryMode
 			SetTextStringOutlined ( ArrowSetTextStringIndex[2], "Story Child" )
 		elseif GameMode = TeenStoryMode
@@ -460,7 +460,7 @@ function DisplayOptionsScreen( )
 		elseif GameMode = AdultTwoPlayerMode
 			SetTextStringOutlined ( ArrowSetTextStringIndex[2], "2 Player Adult" )
 		endif
-
+/*
 		CreateArrowSet(180+44+23-38-3)
 		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Game Speed", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 180+44+23-38-3, 3)
 		ArrowSetTextStringIndex[3] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 180+44+23-38-3, 3)
@@ -473,10 +473,10 @@ function DisplayOptionsScreen( )
 		elseif PlayingSyncRate = 60
 			SetTextStringOutlined ( ArrowSetTextStringIndex[3], "Turbo!" )
 		endif
-
+*/
 		CreateArrowSet(180+44+23-38+38+2)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Starting Level:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 180+44+23-38+38+2, 3)
-		ArrowSetTextStringIndex[4] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 180+44+23-38+38+2, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Starting Level:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 180+44+23-38+38+2, 3, 0)
+		ArrowSetTextStringIndex[4] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 180+44+23-38+38+2, 3, 0)
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
 
 		SetSpritePositionByOffset( ScreenLine[2], ScreenWidth/2, 256+16+5 )
@@ -484,23 +484,23 @@ function DisplayOptionsScreen( )
 
 		if ( (Platform = Web or Platform = Android or Platform = Windows or Platform = Linux) or GameUnlocked = 0 )
 			CreateArrowSet(288+16)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #1:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+16, 3)
-			ArrowSetTextStringIndex[5] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+16, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #1:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+16, 3, 0)
+			ArrowSetTextStringIndex[5] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+16, 3, 0)
 			SetTextStringOutlined ( ArrowSetTextStringIndex[5], str(SecretCode[0]) )
 
 			CreateArrowSet(288+44+16)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #2:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+16, 3)
-			ArrowSetTextStringIndex[6] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+16, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #2:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+16, 3, 0)
+			ArrowSetTextStringIndex[6] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+16, 3, 0)
 			SetTextStringOutlined ( ArrowSetTextStringIndex[6], str(SecretCode[1]) )
 
 			CreateArrowSet(288+44+44+16)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #3:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+44+16, 3)
-			ArrowSetTextStringIndex[7] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+44+16, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #3:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+44+16, 3, 0)
+			ArrowSetTextStringIndex[7] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+44+16, 3, 0)
 			SetTextStringOutlined ( ArrowSetTextStringIndex[7], str(SecretCode[2]) )
 
 			CreateArrowSet(288+44+44+44+16)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #4:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+44+44+16, 3)
-			ArrowSetTextStringIndex[8] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+44+44+16, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Secret Code #4:", 999, 20, 255, 255, 255, 255, 0, 0, 0, 0, 56, 288+44+44+44+16, 3, 0)
+			ArrowSetTextStringIndex[8] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 2, (ScreenWidth-56), 288+44+44+44+16, 3, 0)
 			SetTextStringOutlined ( ArrowSetTextStringIndex[8], str(SecretCode[3]) )
 
 			SetSpritePositionByOffset( ScreenLine[3], ScreenWidth/2, 443+19 )
@@ -513,8 +513,8 @@ function DisplayOptionsScreen( )
 		if (Platform = Windows)
 			CreateIcon(8, 180, 527 )
 		else
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "See You Again", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 495, 3)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Next Time!", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 490+60, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "See You Again", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 495, 3, 0)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Next Time!", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 490+60, 3, 0)
 		endif
 		
 		CreateButton( 6, (ScreenWidth / 2), (ScreenHeight-40+15) )
@@ -666,7 +666,7 @@ function DisplayOptionsScreen( )
 		endif
 
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(3) = TRUE
+/*	elseif ThisArrowWasPressed(3) = TRUE
 		if (PlayingSyncRate = 20)
 			PlayingSyncRate = 60
 		elseif (PlayingSyncRate = 60)
@@ -710,7 +710,7 @@ function DisplayOptionsScreen( )
 		endif
 	
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(4) = TRUE
+*/	elseif ThisArrowWasPressed(3) = TRUE
 		if (StartingLevel > 1)
 			dec StartingLevel, 1
 		else
@@ -720,7 +720,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
 
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(4.5) = TRUE
+	elseif ThisArrowWasPressed(3.5) = TRUE
 		if (StartingLevel < LevelSkip[GameMode])
 			inc StartingLevel, 1
 		else
@@ -730,7 +730,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
 
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(5) = TRUE
+	elseif ThisArrowWasPressed(4) = TRUE
 		if SecretCode[0] > 0
 			dec SecretCode[0], 1
 		else
@@ -740,7 +740,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[5], str(SecretCode[0]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(5.5) = TRUE
+	elseif ThisArrowWasPressed(4.5) = TRUE
 		if SecretCode[0] < 9
 			inc SecretCode[0], 1
 		else
@@ -750,7 +750,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[5], str(SecretCode[0]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(6) = TRUE
+	elseif ThisArrowWasPressed(5) = TRUE
 		if SecretCode[1] > 0
 			dec SecretCode[1], 1
 		else
@@ -760,7 +760,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[6], str(SecretCode[1]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(6.5) = TRUE
+	elseif ThisArrowWasPressed(5.5) = TRUE
 		if SecretCode[1] < 9
 			inc SecretCode[1], 1
 		else
@@ -770,7 +770,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[6], str(SecretCode[1]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(7) = TRUE
+	elseif ThisArrowWasPressed(6) = TRUE
 		if SecretCode[2] > 0
 			dec SecretCode[2], 1
 		else
@@ -780,7 +780,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[7], str(SecretCode[2]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(7.5) = TRUE
+	elseif ThisArrowWasPressed(6.5) = TRUE
 		if SecretCode[2] < 9
 			inc SecretCode[2], 1
 		else
@@ -790,7 +790,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[7], str(SecretCode[2]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(8) = TRUE
+	elseif ThisArrowWasPressed(7) = TRUE
 		if SecretCode[3] > 0
 			dec SecretCode[3], 1
 		else
@@ -800,7 +800,7 @@ function DisplayOptionsScreen( )
 		SetTextStringOutlined ( ArrowSetTextStringIndex[8], str(SecretCode[3]) )
 		SecretCodeCombined = ( (SecretCode[0]*1000) + (SecretCode[1]*100) + (SecretCode[2]*10) + (SecretCode[3]) )
 		SetDelayAllUserInput()
-	elseif ThisArrowWasPressed(8.5) = TRUE
+	elseif ThisArrowWasPressed(7.5) = TRUE
 		if SecretCode[3] < 9
 			inc SecretCode[3], 1
 		else
@@ -835,39 +835,39 @@ function DisplayHowToPlayScreen( )
 		LoadSelectedBackground()
 		SetSpritePositionByOffset( TitleBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''H O W   T O   P L A Y''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''H O W   T O   P L A Y''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3,0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 		
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Objective is stop the ball", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(0*25), 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "from passing your goal line.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(1*25), 3 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Objective is stop the ball", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(0*25), 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "from passing your goal line.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(1*25), 3, 0 )
 
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can play single player", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(3*25), 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "against the computer A.I.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(4*25), 3 )
-		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "or play two player simultaneous.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(5*25), 3 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can play single player", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(3*25), 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "against the computer A.I.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(4*25), 3, 0 )
+		CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "or play two player simultaneous.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(5*25), 3, 0 )
 
 		if (Platform = Android or Platform = iOS)
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can tap on the device screen", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(7*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "to move your paddle left and right.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(8*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "With two player mode you can both", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(10*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "tap the screen simultaneously.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(11*25), 3 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can tap on the device screen", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(7*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "to move your paddle left and right.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(8*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "With two player mode you can both", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(10*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "tap the screen simultaneously.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(11*25), 3, 0 )
 		else
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can press left and right arrows", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(7*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "to move your paddle left and right.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(8*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "With two player mode the second", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(10*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "player can move paddle with mouse.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(11*25), 3 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "You can press left and right arrows", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(7*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "to move your paddle left and right.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(8*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "With two player mode the second", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(10*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "player can move paddle with mouse.", 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 60+(11*25), 3, 0 )
 		endif
 
 		SetSpritePositionByOffset( ScreenLine[1], ScreenWidth/2, 290+75 )
 		SetSpriteColor(ScreenLine[1], 255, 255, 255, 255)
 
 		if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Clear All 9 Levels & Win?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Clear All 9 Levels & Win?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3, 0 )
 		else
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Get A New High Score?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Get A New High Score?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3, 0 )
 		endif
 
 		SetSpritePositionByOffset( ScreenLine[2], ScreenWidth/2, 415+25 )
@@ -880,8 +880,8 @@ function DisplayHowToPlayScreen( )
 			SetSpritePositionByOffset( KeyboardControls, ScreenWidth/2, 500+15 )
 			SetSpriteDepth ( KeyboardControls, 3 )
 		elseif (Platform = Android or Platform = iOS)
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "See You", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 470+15, 3 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Again Soon!", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 470+60, 3 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "See You", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 470+15, 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Again Soon!", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 470+60, 3, 0 )
 		endif
 		
 		SetSpritePositionByOffset( ScreenLine[9], ScreenWidth/2, ScreenHeight-65+13 )
@@ -914,13 +914,13 @@ function DisplayHighScoresScreen( )
 		LoadSelectedBackground()
 		SetSpritePositionByOffset( TitleBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''H I G H   S C O R E S''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''H I G H   S C O R E S''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 
 		CreateArrowSet(75)
-		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, (ScreenWidth/2), 75, 3)
+		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, (ScreenWidth/2), 75, 3, 0)
 		if GameMode = ChildStoryMode
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "Story Child" )
 		elseif GameMode = TeenStoryMode
@@ -935,29 +935,30 @@ function DisplayHighScoresScreen( )
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "2 Player Adult" )
 		endif
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "NAME", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29, 130, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "LEVEL", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29+170, 130, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "SCORE", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29+170+60, 130, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "NAME", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29, 130, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "LEVEL", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29+170, 130, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "SCORE", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 29+170+60, 130, 3, 0)
 		screenY as integer
 		screenY = 150+10
 		rank as integer
 		blue as integer
 		for rank = 0 to 9
 			blue = 255
-			if Score = HighScoreScore [ GameMode, rank ] and Level = HighScoreLevel [ GameMode, rank ] then blue = 0
+			if Score[0] = HighScoreScore [ GameMode, rank ] and Level = HighScoreLevel [ GameMode, rank ] then blue = 0
+			if Score[1] = HighScoreScore [ GameMode, rank ] and Level = HighScoreLevel [ GameMode, rank ] then blue = 0
 			
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(rank+1)+".", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 8, screenY, 3)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, HighScoreName [ GameMode, rank ], 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 31, screenY, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(rank+1)+".", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 8, screenY, 3, 0)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, HighScoreName [ GameMode, rank ], 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 31, screenY, 3, 0)
 			
 			if HighScoreLevel[GameMode, rank] < 10
-				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreLevel [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3)
+				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreLevel [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3, 0)
 			elseif (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
-				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "WON!", 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3)
+				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "WON!", 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3, 0)
 			else
-				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreLevel [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3)
+				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreLevel [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3, 0)
 			endif
 			
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreScore [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170+60, screenY, 3)
+			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreScore [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170+60, screenY, 3, 0)
 	
 			inc screenY, 40
 		next rank
@@ -1021,11 +1022,11 @@ function SetupAboutScreenTexts( )
 	startScreenY as integer
 	startScreenY = 640+15
 	AboutTextsScreenY[0] = startScreenY
-	StartIndexOfAboutScreenTexts = CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[0], 999, 16, 255, 255, AboutTextsBlue[0], 255, 0, 0, 0, 1, ScreenWidth/2+84+15, AboutTextsScreenY[0], 3)
+	StartIndexOfAboutScreenTexts = CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[0], 999, 16, 255, 255, AboutTextsBlue[0], 255, 0, 0, 0, 1, ScreenWidth/2+84+15, AboutTextsScreenY[0], 3, 0)
 	AboutTextVisable[0] = 0
 	inc startScreenY, 25
 	AboutTextsScreenY[1] = startScreenY
-	CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[1], 999, 16, 255, 255, AboutTextsBlue[1], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[1], 3)
+	CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[1], 999, 16, 255, 255, AboutTextsBlue[1], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[1], 3, 0)
 	AboutTextVisable[1] = 0
 
 	index as integer
@@ -1049,17 +1050,17 @@ function SetupAboutScreenTexts( )
 		AboutTextsScreenY[index] = startScreenY
 		
 		if (AboutTexts[index] = "Genuine ''Kubuntu 18.04 L.T.S. 64Bit'' Linux")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Hyper-Custom ''JeZxLee'' Pro-Built Desktop")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "GIGABYTE® GA-970A-DS3P 2.0 AM3+ Motherboard")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 12, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 12, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "nVidia® GeForce GTX 970TT 4GB GDDR5 GPU")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Western Digital® 1TB HDD Hard Drive(Personal Data)")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 8, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 8, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		else
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 16, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3)
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 16, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		endif
 
 		AboutTextVisable[index] = 0
@@ -1146,20 +1147,20 @@ function DisplayMusicPlayerScreen( )
 		LoadSelectedBackground()
 		SetSpritePositionByOffset( TitleBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''M U S I C   S C R E E N''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''M U S I C   S C R E E N''", 999, 30, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "CHOOSE", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 120, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "CHOOSE", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 120, 3, 0)
 
 		PlayNewMusic(MusicPlayerScreenIndex, 1)
 
 		CreateArrowSet(ScreenHeight/3)
-		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, (ScreenWidth/2), (ScreenHeight/3), 3 )
+		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, (ScreenWidth/2), (ScreenHeight/3), 3, 0 )
 		if MusicPlayerScreenIndex = 0
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Title" )
-		elseif MusicPlayerScreenIndex = 1
+/*		elseif MusicPlayerScreenIndex = 1
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Title 2" )
 		elseif MusicPlayerScreenIndex = 2
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Story Intro" )
@@ -1179,15 +1180,15 @@ function DisplayMusicPlayerScreen( )
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Ending" )
 		elseif MusicPlayerScreenIndex = 10
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Ending Turbo" )
-		endif
+*/		endif
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "YOUR", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "YOUR", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300, 3, 0)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "BGM", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "BGM", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75, 3, 0)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "MUSIC!", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75+75, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "MUSIC!", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75+75, 3, 0)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "(Not Final!)", 999, 35, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75+75+80, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "(Not Final!)", 999, 35, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300+75+75+80, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[9], ScreenWidth/2, ScreenHeight-65+13 )
 		SetSpriteColor(ScreenLine[9], 255, 255, 0, 255)
@@ -1215,6 +1216,7 @@ function DisplayMusicPlayerScreen( )
 				MusicPlayerScreenIndex = 10
 			endif
 
+			if (MusicPlayerScreenIndex > 0) then MusicPlayerScreenIndex = 0
 		endif
 		
 		NextScreenToDisplay = MusicPlayerScreen
@@ -1229,6 +1231,8 @@ function DisplayMusicPlayerScreen( )
 		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex = 1) then MusicPlayerScreenIndex = 2
 
 		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex > 8) then MusicPlayerScreenIndex = 0
+
+		if (MusicPlayerScreenIndex > 0) then MusicPlayerScreenIndex = 0
 		
 		NextScreenToDisplay = MusicPlayerScreen
 		ScreenFadeStatus = FadingToBlack
@@ -1289,13 +1293,60 @@ function DisplayPlayingScreen( )
 				SetSpriteColorGreen(BallSprite[index], 158)
 				SetSpriteColorBlue(BallSprite[index], 158)
 			endif
-			
 		next index
 
 		LoadImage ( 11250, "\media\images\playing\Wall.png" )
 
 		SetupLevel ( )
 
+		for index = 0 to 4
+			BallParticle[0, index] = CreateSprite ( 11200 )
+			SetSpriteOffset( BallParticle[0, index], (GetSpriteWidth(BallParticle[0, index])/2) , (GetSpriteHeight(BallParticle[0, index])/2) ) 
+
+			BallParticleScreenX[0, index] = BallScreenX[0]
+			BallParticleScreenY[0, index] = BallScreenY[0]
+			SetSpritePositionByOffset(BallParticle[0, index], BallParticleScreenX[0, index], BallParticleScreenY[0, index])
+
+			SetSpriteDepth ( BallParticle[0, index], 3 )
+			
+			SetSpriteColorRed(BallParticle[0, index], 255)
+			SetSpriteColorGreen(BallParticle[0, index], 255)
+			SetSpriteColorBlue(BallParticle[0, index], 255)
+				
+			BallParticle[1, index] = CreateSprite ( 11200 )
+			SetSpriteOffset( BallParticle[1, index], (GetSpriteWidth(BallParticle[1, index])/2) , (GetSpriteHeight(BallParticle[1, index])/2) ) 
+
+			BallParticleScreenX[1, index] = BallScreenX[1]
+			BallParticleScreenY[1, index] = BallScreenY[1]
+			SetSpritePositionByOffset(BallParticle[1, index], BallParticleScreenX[1, index], BallParticleScreenY[1, index])
+
+			SetSpriteDepth ( BallParticle[1, index], 3 )
+				
+			SetSpriteColorRed(BallParticle[1, index], 158)
+			SetSpriteColorGreen(BallParticle[1, index], 158)
+			SetSpriteColorBlue(BallParticle[1, index], 158)
+		next index
+
+		transparency as integer
+		transparency = 255
+		for index = 0 to 4
+			SetSpriteColorAlpha(BallParticle[0, index], transparency)
+			SetSpriteColorAlpha(BallParticle[1, index], transparency)
+			transparency = transparency - (255 / 5)
+		next index
+
+		BallParticleIndex[0] = 0
+		BallParticleIndex[1] = 0
+
+		ScoreText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[0]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 640-25, 3, 0)
+
+		if (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode)
+			if (Platform = Android or Platform = iOS)
+				ScoreText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[1]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 25, 3, 180)
+			else
+				ScoreText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[1]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 25, 3, 0)
+			endif
+		endif
 		
 //		SetSyncRate( 60, 1 )
 	endif
@@ -1324,13 +1375,13 @@ function DisplayNewHighScoreNameInputScreen ( )
 		LoadSelectedBackground()		
 		SetSpritePositionByOffset( TitleBG, ScreenWidth/2, ScreenHeight/2 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''N E W   H I G H   S C O R E''", 999, 28, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''N E W   H I G H   S C O R E''", 999, 28, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "You Achieved A New High Score!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Enter Your Name!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70+25, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "You Achieved A New High Score!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Enter Your Name!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70+25, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[1], ScreenWidth/2, 130 )
 		SetSpriteColor(ScreenLine[1], 255, 255, 255, 255)
@@ -1338,7 +1389,7 @@ function DisplayNewHighScoreNameInputScreen ( )
 		NewHighScoreCurrentName = ""
 		NewHighScoreNameIndex = 0
 
-		NewNameText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 30, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 185, 3)
+		NewNameText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 30, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 185, 3, 0)
 		SetTextStringOutlined ( NewNameText, NewHighScoreCurrentName )
 
 		SetSpritePositionByOffset( ScreenLine[2], ScreenWidth/2, 240 )
@@ -1474,13 +1525,13 @@ function DisplayNewHighScoreNameInputAndroidScreen ( )
 		SetSpriteOffset( NameInputCharSprite, (GetSpriteWidth(NameInputCharSprite)/2) , (GetSpriteHeight(NameInputCharSprite)/2) ) 
 		SetSpritePositionByOffset( NameInputCharSprite, -9999, -9999 )
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''N E W   H I G H   S C O R E''", 999, 28, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "''N E W   H I G H   S C O R E''", 999, 28, 255, 255, 0, 255, 0, 0, 0, 1, ScreenWidth/2, 20-5, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[0], ScreenWidth/2, 41-10 )
 		SetSpriteColor(ScreenLine[0], 255, 255, 0, 255)
 
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "You Achieved A New High Score!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70, 3)
-		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Enter Your Name!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70+25, 3)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "You Achieved A New High Score!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Enter Your Name!", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 70+25, 3, 0)
 
 		SetSpritePositionByOffset( ScreenLine[1], ScreenWidth/2, 130 )
 		SetSpriteColor(ScreenLine[1], 255, 255, 255, 255)
@@ -1488,7 +1539,7 @@ function DisplayNewHighScoreNameInputAndroidScreen ( )
 		NewHighScoreCurrentName = ""
 		NewHighScoreNameIndex = 0
 
-		NewNameText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 30, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 185, 3)
+		NewNameText = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 30, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 185, 3, 0)
 		SetTextStringOutlined ( NewNameText, NewHighScoreCurrentName )
 
 		SetSpritePositionByOffset( ScreenLine[2], ScreenWidth/2, 240 )
@@ -1592,7 +1643,7 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function DisplayIntroSceneScreen( )
-	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
+/*	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 		PlayNewMusic(2, 1)
 
 		ClearScreenWithColor ( 0, 0, 0 )
@@ -1728,12 +1779,12 @@ function DisplayIntroSceneScreen( )
 		DeleteImage(202)
 		DeleteImage(203)
 	endif
-endfunction
+*/endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
 function DisplayEndingSceneScreen( )
-	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
+/*	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 		ClearScreenWithColor ( 0, 0, 0 )
 
 		LoadImage ( 205, "\media\images\story\MarsBG.png" )
@@ -1903,4 +1954,4 @@ function DisplayEndingSceneScreen( )
 		
 		NextScreenToDisplay = AboutScreen
 	endif						
-endfunction
+*/endfunction

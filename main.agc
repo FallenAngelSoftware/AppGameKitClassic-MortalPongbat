@@ -8,10 +8,10 @@ remstart
                                         (Version 2.0.0)
            _  _   __  ____  ____  __   __      ____   __   __ _   ___  ____   __  ____ TM
           ( \/ ) /  \(  _ \(_  _)/ _\ (  )    (  _ \ /  \ (  ( \ / __)(  _ \ / _\(_  _)
-          / \/ \(  O ))   /  )( /    \/ (_/\   ) __/(  O )/    /( (_ \ ) _ (/    \ )(  
+          / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.18         TURBO!
+                                     Retail1 110% - v0.0.23         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.18''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.23''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_18.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_23.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_18-"
+HTML5DataVersion = "MP-v0_0_23-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -88,7 +88,6 @@ if ( GetDeviceBaseName() = "android" or GetDeviceBaseName() = "ios" )
 else
 	Platform = Web
 	if (MaximumFrameRate = 0)
-//		SetSyncRate( 30, 1 )
 		SetVSync( 1 )
  	else
 		SetSyncRate( 0, 1 )
@@ -350,11 +349,11 @@ LoadInterfaceSprites()
 PreRenderButtonsWithTexts()
 
 global CurrentlyPlayingMusicIndex = -1
-#constant MusicTotal						11
+#constant MusicTotal						1
 global MusicTrack as integer[MusicTotal]
 LoadAllMusic()
 
-#constant EffectsTotal						12
+#constant EffectsTotal						4
 global SoundEffect as integer[EffectsTotal]
 LoadAllSoundEffects()
 
@@ -403,6 +402,13 @@ global BallStillColliding as integer[2]
 
 global WallSprite as integer[10, 11]
 global WallTotal as integer
+
+global BallOffsetY as float
+
+global BallParticle as integer[2, 5]
+global BallParticleScreenX as float[2, 5]
+global BallParticleScreenY as float[2, 5]
+global BallParticleIndex as integer[2]
 //==========================================
 
 global PlayerLostALife as integer
@@ -463,8 +469,8 @@ ChangingBackground = FALSE
 global GameSpeed as integer
 GameSpeed = 30
 
-global Score as integer
-global ScoreText as integer
+global Score as integer[2]
+global ScoreText as integer[2]
 global Level as integer
 global LevelText as integer
 global LevelTextTwo as integer
@@ -661,7 +667,7 @@ global CurrentIconBeingPressed as integer
 CurrentIconBeingPressed = -1
 global CurrentKeyboardKeyPressed as integer
 CurrentKeyboardKeyPressed = -1
-//Platform = Android
+
 global Tap as integer[2]
 global TapStartX as integer[2]
 global TapStartY as integer[2]

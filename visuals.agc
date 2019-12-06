@@ -214,9 +214,11 @@ endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
-function CreateAndInitializeOutlinedText (outline as integer, index as integer, text as string, font as integer, size as integer, red as integer, green as integer, blue as integer, alpha as integer, outRed as integer, outGreen as integer, outBlue as integer, horizontalJustification as integer, screenX as integer, screenY as integer, depth as integer )
+function CreateAndInitializeOutlinedText (outline as integer, index as integer, text as string, font as integer, size as integer, red as integer, green as integer, blue as integer, alpha as integer, outRed as integer, outGreen as integer, outBlue as integer, horizontalJustification as integer, screenX as integer, screenY as integer, depth as integer, angle as float)
 	size = (size+27)
 	dec screenY, 5
+
+	if (angle = 180) then inc screenY, 57
 
 	outlineIndex as integer
 	outlineIndex = 1
@@ -241,6 +243,7 @@ function CreateAndInitializeOutlinedText (outline as integer, index as integer, 
 					SetTextAlignment(index+outlineIndex, horizontalJustification)
 					SetTextPosition(index+outlineIndex, screenX+posX, screenY+posY)
 					SetTextDepth(index+outlineIndex, depth)
+					SetTextAngle(index+outlineIndex, angle)
 					inc outlineIndex, 1
 				endif
 			next posY
@@ -256,6 +259,7 @@ function CreateAndInitializeOutlinedText (outline as integer, index as integer, 
 	SetTextAlignment(index, horizontalJustification)
 	SetTextPosition(index, screenX, screenY)
 	SetTextDepth(index, depth)
+	SetTextAngle(index, angle)
 	
 	inc CurrentMinTextIndex, outlineIndex
 endfunction index

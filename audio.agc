@@ -7,32 +7,13 @@ function LoadAllSoundEffects ( )
 	SoundEffect[ 2] = LoadSoundOGG("\media\sound\BallHitOne.ogg")
 	SoundEffect[ 3] = LoadSoundOGG("\media\sound\BallHitTwo.ogg")
 	
-//	SoundEffect[ 2] = LoadSoundOGG("\media\sound\Burp.ogg")
-//	SoundEffect[ 3] = LoadSoundOGG("\media\sound\Thrust.ogg")
-	SoundEffect[ 4] = LoadSoundOGG("\media\sound\MoveSelector.ogg")
-	SoundEffect[ 5] = LoadSoundOGG("\media\sound\SwapPieces.ogg")
-	SoundEffect[ 6] = LoadSoundOGG("\media\sound\PiecesCleared.ogg")
-	SoundEffect[ 7] = LoadSoundOGG("\media\sound\MultiDropClear.ogg")
-	SoundEffect[ 8] = LoadSoundOGG("\media\sound\PlayfieldRise.ogg")
-	SoundEffect[ 9] = LoadSoundOGG("\media\sound\LevelUp.ogg")
-	SoundEffect[10] = LoadSoundOGG("\media\sound\GameOver.ogg")
-	SoundEffect[11] = LoadSoundOGG("\media\sound\Explosion.ogg")
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
 function LoadAllMusic ( )
 	MusicTrack[ 0] = LoadMusicOGG( "\media\music\TitleBGM.ogg" )
-	MusicTrack[ 1] = LoadMusicOGG( "\media\music\Title2BGM.ogg" )
-	MusicTrack[ 2] = LoadMusicOGG( "\media\music\StoryIntroBGM.ogg" )
-	MusicTrack[ 3] = LoadMusicOGG( "\media\music\InGameStartBGM.ogg" )
-	MusicTrack[ 4] = LoadMusicOGG( "\media\music\InGameMiddleBGM.ogg" )
-	MusicTrack[ 5] = LoadMusicOGG( "\media\music\InGameEndBGM.ogg" )
-	MusicTrack[ 6] = LoadMusicOGG( "\media\music\TimeAttackBGM.ogg" )
-	MusicTrack[ 7] = LoadMusicOGG( "\media\music\NewHighScoreBGM.ogg" )
-	MusicTrack[ 8] = LoadMusicOGG( "\media\music\TopHighScoreBGM.ogg" )
-	MusicTrack[ 9] = LoadMusicOGG( "\media\music\Ending2BGM.ogg" )
-	MusicTrack[10] = LoadMusicOGG( "\media\music\WinTurbo2BGM.ogg" )
+
 endfunction
 
 //------------------------------------------------------------------------------------------------------------

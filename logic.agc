@@ -12,18 +12,29 @@ function SetupForNewGame()
 	PaddleDestinationX[1] = (ScreenWidth/2)
 	PaddleDestinationDir[1] = JoyCENTER
 
+	if (GameMode = ChildStoryMode or GameMode = ChildTwoPlayerMode)
+		BallOffsetY = 2
+	elseif (GameMode = TeenStoryMode or GameMode = TeenTwoPlayerMode)
+		BallOffsetY = 6
+	elseif (GameMode = AdultStoryMode or GameMode = AdultTwoPlayerMode)
+		BallOffsetY = 4
+	endif
+
 	BallScreenX[0] = ScreenWidth/2
 	BallScreenY[0] = ScreenHeight/2 + (ScreenHeight/3)
-	BallMovementX[0] = -5
-	BallMovementY[0] = -5
+	BallMovementX[0] = (BallOffsetY * -1)
+	BallMovementY[0] = (BallOffsetY * -1)
 	BallStillColliding[0] = FALSE
 
 	BallScreenX[1] = ScreenWidth/2
 	BallScreenY[1] = ScreenHeight/2 - (ScreenHeight/3)
-	BallMovementX[1] = 5
-	BallMovementY[1] = 5
+	BallMovementX[1] = BallOffsetY
+	BallMovementY[1] = BallOffsetY
 	BallStillColliding[1] = FALSE
-
+	
+	Score[0] = 0
+	Score[1] = 0
+	Level = 1
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -91,16 +102,24 @@ function SetupLevel()
 	PaddleDestinationX[1] = (ScreenWidth/2)
 	PaddleDestinationDir[1] = JoyCENTER
 
+	if (GameMode = ChildStoryMode or GameMode = ChildTwoPlayerMode)
+		BallOffsetY = 2
+	elseif (GameMode = TeenStoryMode or GameMode = TeenTwoPlayerMode)
+		BallOffsetY = 6
+	elseif (GameMode = AdultStoryMode or GameMode = AdultTwoPlayerMode)
+		BallOffsetY = 4
+	endif
+
 	BallScreenX[0] = ScreenWidth/2
 	BallScreenY[0] = ScreenHeight/2 + (ScreenHeight/3)
-	BallMovementX[0] = -5
-	BallMovementY[0] = -5
+	BallMovementX[0] = (BallOffsetY * -1)
+	BallMovementY[0] = (BallOffsetY * -1)
 	BallStillColliding[0] = FALSE
 
 	BallScreenX[1] = ScreenWidth/2
 	BallScreenY[1] = ScreenHeight/2 - (ScreenHeight/3)
-	BallMovementX[1] = 5
-	BallMovementY[1] = 5
+	BallMovementX[1] = BallOffsetY
+	BallMovementY[1] = BallOffsetY
 	BallStillColliding[1] = FALSE
 endfunction
 
@@ -166,8 +185,40 @@ function RunGameplayCore()
 		else
 			PaddleDestinationDir[0] = JoyCENTER
 		endif
-		
-		if (MouseButtonLeft = ON)
+
+		if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
+			if (BallScreenY[1] < BallScreenY[0])
+				if (BallScreenX[1] < PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyLEFT
+				elseif (BallScreenX[1] > PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyRIGHT
+				endif
+
+				PaddleDestinationX[1] = BallScreenX[1]
+			elseif (BallScreenY[1] > BallScreenY[0])
+				if (BallScreenX[0] < PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyLEFT
+				elseif (BallScreenX[0] > PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyRIGHT
+				endif
+
+				PaddleDestinationX[1] = BallScreenX[0]
+			endif
+
+			if (MouseButtonLeft = ON)
+				if (MouseScreenY > ScreenHeight/2)
+					PaddleDestinationX[0] = MouseScreenX
+
+					if (PaddleScreenX[0] > MouseScreenX)
+						PaddleDestinationDir[0] = JoyLEFT
+					elseif (PaddleScreenX[0] < MouseScreenX)
+						PaddleDestinationDir[0] = JoyRIGHT
+					else
+						PaddleDestinationDir[0] = JoyCENTER
+					endif
+				endif
+			endif		
+		elseif (MouseButtonLeft = ON)
 			if (MouseScreenY < ScreenHeight/2)
 				PaddleDestinationX[1] = MouseScreenX
 
@@ -178,10 +229,40 @@ function RunGameplayCore()
 				else
 					PaddleDestinationDir[1] = JoyCENTER
 				endif
-			endif		
+			endif
 		endif
 	elseif (Platform = Android or Platform = iOS)
-		if GetMultiTouchExists()=1
+		if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
+			if (BallScreenY[1] < BallScreenY[0])
+				if (BallScreenX[1] < PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyLEFT
+				elseif (BallScreenX[1] > PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyRIGHT
+				endif
+
+				PaddleDestinationX[1] = BallScreenX[1]
+			elseif (BallScreenY[1] > BallScreenY[0])
+				if (BallScreenX[0] < PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyLEFT
+				elseif (BallScreenX[0] > PaddleScreenX[1])
+					PaddleDestinationDir[1] = JoyRIGHT
+				endif
+
+				PaddleDestinationX[1] = BallScreenX[0]
+			endif
+
+			if (MouseScreenY > ScreenHeight/2)
+				PaddleDestinationX[0] = MouseScreenX
+
+				if (PaddleScreenX[0] > MouseScreenX)
+					PaddleDestinationDir[0] = JoyLEFT
+				elseif (PaddleScreenX[0] < MouseScreenX)
+					PaddleDestinationDir[0] = JoyRIGHT
+				else
+					PaddleDestinationDir[0] = JoyCENTER
+				endif
+			endif
+		elseif GetMultiTouchExists()=1
 			if GetRawTouchCount(1)=2
 				if ( TapCurrentY[0] < (ScreenHeight/2) )
 					PaddleDestinationX[1] = TapCurrentX[0]
@@ -253,27 +334,30 @@ function RunGameplayCore()
 	endif
 
 	for index = 0 to 1
-		if (Platform <> Android and Platform <> iOS) then index = 1
-				
-		if (PaddleDestinationDir[index] = JoyLEFT)
-			dec PaddleScreenX[index], 5
-			if ( PaddleScreenX[index] < (40) ) then PaddleScreenX[index] = (40)
-					
-			SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
+		if (index = 0 and JoystickDirection <> JoyCENTER)
+			PaddleDestinationX[index] = PaddleScreenX[index]
+			MouseButtonLeft = OFF
+		else
+			if (PaddleDestinationDir[index] = JoyLEFT)
+				dec PaddleScreenX[index], 5
+				if ( PaddleScreenX[index] < (40) ) then PaddleScreenX[index] = (40)
+						
+				SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
 
-			if (PaddleScreenX[index] < PaddleDestinationX[index])
-				PaddleScreenX[index] = PaddleDestinationX[index]
-				PaddleDestinationDir[index] = JoyCENTER
-			endif
-		elseif (PaddleDestinationDir[index] = JoyRIGHT)
-			inc PaddleScreenX[index], 5
-			if ( PaddleScreenX[index] > (360-40) ) then PaddleScreenX[index] = (360-40)
+				if (PaddleScreenX[index] < PaddleDestinationX[index])
+					PaddleScreenX[index] = PaddleDestinationX[index]
+					PaddleDestinationDir[index] = JoyCENTER
+				endif
+			elseif (PaddleDestinationDir[index] = JoyRIGHT)
+				inc PaddleScreenX[index], 5
+				if ( PaddleScreenX[index] > (360-40) ) then PaddleScreenX[index] = (360-40)
 
-			SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
+				SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
 
-			if (PaddleScreenX[index] > PaddleDestinationX[index])
-				PaddleScreenX[index] = PaddleDestinationX[index]
-				PaddleDestinationDir[index] = JoyCENTER
+				if (PaddleScreenX[index] > PaddleDestinationX[index])
+					PaddleScreenX[index] = PaddleDestinationX[index]
+					PaddleDestinationDir[index] = JoyCENTER
+				endif
 			endif
 		endif
 	next index
@@ -327,18 +411,33 @@ function RunGameplayCore()
 				endif
 			next paddleIndex
 		endif
-		
+
 		indexX as integer
 		indexY as integer
 		for indexY = 0 to 10
 			for indexX = 0 to 9
 				if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 )
 					if ( GetSpriteCollision(BallSprite[ballIndex], WallSprite[indexX, indexY]) = 1 )
+						if (BallMovementY[ballIndex] < 0)
+							inc BallScreenY[ballIndex], BallOffsetY
+						elseif (BallMovementY[ballIndex] > 0)
+							dec BallScreenY[ballIndex], BallOffsetY
+						endif
+						SetSpritePositionByOffset( BallSprite[ballIndex], BallScreenX[ballIndex], BallScreenY[ballIndex] )
+
 						BallMovementY[ballIndex] = BallMovementY[ballIndex] * -1
 
 						PlaySoundEffect(3)				
 						
 						SetSpritePositionByOffset(WallSprite[indexX, indexY], -9999, -9999)
+
+						inc Score[ballIndex], (10 * Level)
+						
+						if ( ballIndex = 1 and (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode) )
+						
+						else
+							SetTextStringOutlined ( ScoreText[ballIndex], str(Score[ballIndex]) )
+						endif
 						
 						indexX = 10
 						indexY = 5
@@ -352,6 +451,18 @@ function RunGameplayCore()
 				endif
 			next indexX
 		next indexY
+
+		particleIndex as integer
+		for particleIndex = 4 to 1 step -1
+			BallParticleScreenX[ballIndex, particleIndex] = BallParticleScreenX[ballIndex, particleIndex-1]
+			BallParticleScreenY[ballIndex, particleIndex] = BallParticleScreenY[ballIndex, particleIndex-1]
+			SetSpritePositionByOffset( BallParticle[ballIndex, particleIndex], BallParticleScreenX[ballIndex, particleIndex], BallParticleScreenY[ballIndex, particleIndex] )
+		next particleIndex
+
+		BallParticleScreenX[ballIndex, 0] = BallScreenX[ballIndex]
+		BallParticleScreenY[ballIndex, 0] = BallScreenY[ballIndex]
+		SetSpritePositionByOffset( BallParticle[ballIndex, 0], BallParticleScreenX[ballIndex, 0], BallParticleScreenY[ballIndex, 0] )
+
 	next ballIndex
 endfunction
 

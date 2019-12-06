@@ -43,9 +43,16 @@ endfunction
 function CheckPlayerForHighScore ( )
 	PlayerRankOnGameOver = 999
 
+	playerWithHighestScore as integer
+	if (Score[0] > Score[1])
+		playerWithHighestScore = 0
+	else
+		playerWithHighestScore = 1
+	endif
+
 	index as integer
 	for index = 9 to 0 step -1
-		if Score > HighScoreScore[GameMode, index] then PlayerRankOnGameOver = index
+		if Score[playerWithHighestScore] > HighScoreScore[GameMode, index] then PlayerRankOnGameOver = index
 	next index
 
 	if PlayerRankOnGameOver < 10
@@ -61,7 +68,7 @@ function CheckPlayerForHighScore ( )
 
 		HighScoreName[GameMode, PlayerRankOnGameOver] = ""
 		HighScoreLevel[GameMode, PlayerRankOnGameOver] = Level
-		HighScoreScore[GameMode, PlayerRankOnGameOver] = Score
+		HighScoreScore[GameMode, PlayerRankOnGameOver] = Score[playerWithHighestScore]
 	endif
 endfunction
 
