@@ -1160,27 +1160,25 @@ function DisplayMusicPlayerScreen( )
 		ArrowSetTextStringIndex[0] = CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, " ", 999, 20, 255, 255, 255, 255, 0, 0, 0, 1, (ScreenWidth/2), (ScreenHeight/3), 3, 0 )
 		if MusicPlayerScreenIndex = 0
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Title" )
-/*		elseif MusicPlayerScreenIndex = 1
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Title 2" )
+		elseif MusicPlayerScreenIndex = 1
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Playing #0123" )
 		elseif MusicPlayerScreenIndex = 2
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Story Intro" )
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Playing #456" )
 		elseif MusicPlayerScreenIndex = 3
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: InGame Start" )
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Playing #78" )
 		elseif MusicPlayerScreenIndex = 4
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: InGame Middle" )
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Playing #9" )
 		elseif MusicPlayerScreenIndex = 5
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: InGame End" )
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Playing 2 Player" )
 		elseif MusicPlayerScreenIndex = 6
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Time Attack" )
-		elseif MusicPlayerScreenIndex = 7
 			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: New High Score" )
+		elseif MusicPlayerScreenIndex = 7
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Win Child" )
 		elseif MusicPlayerScreenIndex = 8
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Top High Score" )
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Win Teen" )
 		elseif MusicPlayerScreenIndex = 9
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Ending" )
-		elseif MusicPlayerScreenIndex = 10
-			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Ending Turbo" )
-*/		endif
+			SetTextStringOutlined ( ArrowSetTextStringIndex[0], "BGM: Win Adult" )
+		endif
 
 		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "YOUR", 999, 65, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 300, 3, 0)
 
@@ -1208,31 +1206,22 @@ function DisplayMusicPlayerScreen( )
 	if ThisArrowWasPressed(0) = TRUE
 		if MusicPlayerScreenIndex > 0
 			dec MusicPlayerScreenIndex, 1
-			if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex = 1) then MusicPlayerScreenIndex = 0
 		else
-			if (SecretCodeCombined <> 5431)
-				MusicPlayerScreenIndex = 8
-			else
-				MusicPlayerScreenIndex = 10
-			endif
-
-			if (MusicPlayerScreenIndex > 0) then MusicPlayerScreenIndex = 0
+				MusicPlayerScreenIndex = 9
 		endif
-		
+				
+		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex = 9) then MusicPlayerScreenIndex = 6
+				
 		NextScreenToDisplay = MusicPlayerScreen
 		ScreenFadeStatus = FadingToBlack
 	elseif ThisArrowWasPressed(.5) = TRUE
-		if MusicPlayerScreenIndex < 10
+		if MusicPlayerScreenIndex < 9
 			inc MusicPlayerScreenIndex, 1
 		else
 			MusicPlayerScreenIndex = 0
 		endif
 
-		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex = 1) then MusicPlayerScreenIndex = 2
-
-		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex > 8) then MusicPlayerScreenIndex = 0
-
-		if (MusicPlayerScreenIndex > 0) then MusicPlayerScreenIndex = 0
+		if (SecretCodeCombined <> 5431 and MusicPlayerScreenIndex = 7) then MusicPlayerScreenIndex = 0
 		
 		NextScreenToDisplay = MusicPlayerScreen
 		ScreenFadeStatus = FadingToBlack

@@ -197,6 +197,15 @@ function LoadAboutScreenTexts ( )
 	AddAboutScreenText("''DannyD''", 255)
 	AddAboutScreenText("''Virtual Nomad''", 255)
 	AddAboutScreenText("''george++''", 255)
+	
+	AddAboutScreenText("''c0d3r9''", 255)
+	AddAboutScreenText("''Phobos70''", 255)
+	AddAboutScreenText("''Undroid''", 255)
+	AddAboutScreenText("''Richard_6''", 255)
+	AddAboutScreenText("''satyendra.singh''", 255)
+	AddAboutScreenText("''Imagination Engineer''", 255)
+	AddAboutScreenText("''Paul Johnston''", 255)
+
 	AddAboutScreenText(" ", 255)
 	
 	AddAboutScreenText("''swivel''", 255)

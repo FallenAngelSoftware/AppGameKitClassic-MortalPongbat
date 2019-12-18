@@ -11,7 +11,7 @@ remstart
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.23         TURBO!
+                                     Retail1 110% - v0.0.25         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.23''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.25''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_23.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_25.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_23-"
+HTML5DataVersion = "MP-v0_0_25-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -349,7 +349,7 @@ LoadInterfaceSprites()
 PreRenderButtonsWithTexts()
 
 global CurrentlyPlayingMusicIndex = -1
-#constant MusicTotal						1
+#constant MusicTotal						10
 global MusicTrack as integer[MusicTotal]
 LoadAllMusic()
 

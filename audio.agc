@@ -13,6 +13,15 @@ endfunction
 
 function LoadAllMusic ( )
 	MusicTrack[ 0] = LoadMusicOGG( "\media\music\TitleBGM.ogg" )
+	MusicTrack[ 1] = LoadMusicOGG( "\media\music\Playing0123BGM.ogg" )
+	MusicTrack[ 2] = LoadMusicOGG( "\media\music\Playing456BGM.ogg" )
+	MusicTrack[ 3] = LoadMusicOGG( "\media\music\Playing78BGM.ogg" )
+	MusicTrack[ 4] = LoadMusicOGG( "\media\music\Playing9BGM.ogg" )
+	MusicTrack[ 5] = LoadMusicOGG( "\media\music\Playing2PlayerBGM.ogg" )
+	MusicTrack[ 6] = LoadMusicOGG( "\media\music\NewHighScoreBGM.ogg" )
+	MusicTrack[ 7] = LoadMusicOGG( "\media\music\WinChildBGM.ogg" )
+	MusicTrack[ 8] = LoadMusicOGG( "\media\music\WinTeenBGM.ogg" )
+	MusicTrack[ 9] = LoadMusicOGG( "\media\music\WinAdultBGM.ogg" )
 
 endfunction
 

@@ -34,7 +34,7 @@ function SetupForNewGame()
 	
 	Score[0] = 0
 	Score[1] = 0
-	Level = 1
+	Level = 0
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -48,6 +48,11 @@ function SetupLevel()
 	screenY = ( (ScreenHeight / 2) - (18*5) + (18/2) )
 	indexY as integer
 	indexX as integer
+	
+	if (Level = 0) then PlayNewMusic(1, 1)
+
+	inc Level, 1
+	
 	if (Level > -1) // = 0)
 		for indexY = 0 to 10
 			for indexX = 0 to 9
