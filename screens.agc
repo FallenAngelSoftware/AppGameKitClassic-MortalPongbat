@@ -623,7 +623,7 @@ function DisplayOptionsScreen( )
 			GameMode = 5
 		endif
 
-		if (StartingLevel > LevelSkip[GameMode]) then StartingLevel = 1
+		if (StartingLevel > LevelSkip[GameMode]) then StartingLevel = 0
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
 
 		if GameMode = ChildStoryMode
@@ -648,7 +648,7 @@ function DisplayOptionsScreen( )
 			GameMode = 0
 		endif
 
-		if (StartingLevel > LevelSkip[GameMode]) then StartingLevel = 1
+		if (StartingLevel > LevelSkip[GameMode]) then StartingLevel = 0
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
 
 		if GameMode = ChildStoryMode
@@ -711,7 +711,7 @@ function DisplayOptionsScreen( )
 	
 		SetDelayAllUserInput()
 */	elseif ThisArrowWasPressed(3) = TRUE
-		if (StartingLevel > 1)
+		if (StartingLevel > 0)
 			dec StartingLevel, 1
 		else
 			StartingLevel = LevelSkip[GameMode]
@@ -724,7 +724,7 @@ function DisplayOptionsScreen( )
 		if (StartingLevel < LevelSkip[GameMode])
 			inc StartingLevel, 1
 		else
-			StartingLevel = 1
+			StartingLevel = 0
 		endif
 
 		SetTextStringOutlined ( ArrowSetTextStringIndex[4], str(StartingLevel) )
@@ -950,7 +950,7 @@ function DisplayHighScoresScreen( )
 			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(rank+1)+".", 999, 15, 200, 200, 200, 255, 0, 0, 0, 0, 8, screenY, 3, 0)
 			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, HighScoreName [ GameMode, rank ], 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 31, screenY, 3, 0)
 			
-			if HighScoreLevel[GameMode, rank] < 10
+			if HighScoreLevel[GameMode, rank] < 11
 				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(HighScoreLevel [ GameMode, rank ]), 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3, 0)
 			elseif (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
 				CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "WON!", 999, 18, 255, 255, blue, 255, 0, 0, 0, 0, 29+170, screenY, 3, 0)
@@ -1285,6 +1285,18 @@ function DisplayPlayingScreen( )
 		next index
 
 		LoadImage ( 11250, "\media\images\playing\Wall.png" )
+indexY as integer
+indexX as integer
+for indexY = 0 to 10
+	for indexX = 0 to 9
+		if ( GetSpriteExists(WallSprite[indexX, indexY]) = 0 ) 
+			WallSprite[indexX, indexY] = CreateSprite ( 11250 )
+			SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
+			SetSpritePositionByOffset( WallSprite[indexX, indexY], -9999, -9999 )
+			SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
+		endif
+	next indexX
+next indexY
 
 		SetupLevel ( )
 
@@ -1340,7 +1352,7 @@ function DisplayPlayingScreen( )
 //		SetSyncRate( 60, 1 )
 	endif
 
-	RunGameplayCore ( )
+	if (ScreenFadeStatus = FadingIdle) then RunGameplayCore ( )
 		
 	if FadingToBlackCompleted = TRUE
 //		SetSyncRate( 30, 1 )

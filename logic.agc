@@ -12,13 +12,7 @@ function SetupForNewGame()
 	PaddleDestinationX[1] = (ScreenWidth/2)
 	PaddleDestinationDir[1] = JoyCENTER
 
-	if (GameMode = ChildStoryMode or GameMode = ChildTwoPlayerMode)
-		BallOffsetY = 2
-	elseif (GameMode = TeenStoryMode or GameMode = TeenTwoPlayerMode)
-		BallOffsetY = 6
-	elseif (GameMode = AdultStoryMode or GameMode = AdultTwoPlayerMode)
-		BallOffsetY = 4
-	endif
+	BallOffsetY = BallOffsetYArray[GameMode]
 
 	BallScreenX[0] = ScreenWidth/2
 	BallScreenY[0] = ScreenHeight/2 + (ScreenHeight/3)
@@ -34,7 +28,59 @@ function SetupForNewGame()
 	
 	Score[0] = 0
 	Score[1] = 0
-	Level = 0
+	Level = -1
+
+	if (StartingLevel > 0)
+		Level = StartingLevel
+
+		if (Level < 4)
+			PlayNewMusic(1, 1)
+		elseif (Level < 7)
+			PlayNewMusic(2, 1)
+		elseif (Level < 9)
+			PlayNewMusic(3, 1)
+		elseif (Level > 8)
+			PlayNewMusic(4, 1)
+		endif
+	endif
+endfunction
+
+//------------------------------------------------------------------------------------------------------------
+
+function InitializeBrickForNewLevel(color as integer, indexX as integer, indexY as integer, screenX as float, screenY as float)
+	inc WallTotal, 1
+	if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) 
+//		WallSprite[indexX, indexY] = CreateSprite ( 11250 )
+//		SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
+		SetSpritePositionByOffset( WallSprite[indexX, indexY], screenX, screenY )
+//		SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
+
+		if (color = 1) // Red
+			SetSpriteColorRed(WallSprite[indexX, indexY], 255)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
+		elseif (color = 2) // Orangle
+			SetSpriteColorRed(WallSprite[indexX, indexY], 255)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 155)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
+		elseif (color = 3) // Yellow
+			SetSpriteColorRed(WallSprite[indexX, indexY], 255)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 255)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
+		elseif (color = 4) // Green
+			SetSpriteColorRed(WallSprite[indexX, indexY], 0)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 255)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
+		elseif (color = 5) // Blue
+			SetSpriteColorRed(WallSprite[indexX, indexY], 0)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 255)
+		elseif (color = 6) // Purple
+			SetSpriteColorRed(WallSprite[indexX, indexY], 255)
+			SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
+			SetSpriteColorBlue(WallSprite[indexX, indexY], 255)
+		endif
+	endif
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -48,54 +94,173 @@ function SetupLevel()
 	screenY = ( (ScreenHeight / 2) - (18*5) + (18/2) )
 	indexY as integer
 	indexX as integer
-	
-	if (Level = 0) then PlayNewMusic(1, 1)
 
 	inc Level, 1
+
+	if (LevelSkip[GameMode] < Level) then LevelSkip[GameMode] = Level	
 	
-	if (Level > -1) // = 0)
-		for indexY = 0 to 10
-			for indexX = 0 to 9
-				inc WallTotal, 1
-				
-				WallSprite[indexX, indexY] = CreateSprite ( 11250 )
-				SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
-				SetSpritePositionByOffset( WallSprite[indexX, indexY], screenX, screenY )
-				SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
-
-				if (indexY = 0 or indexY = 10)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 255)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 255)
-				elseif (indexY = 1 or indexY = 9)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 0)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 255)
-				elseif (indexY = 2 or indexY = 8)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 0)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 255)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
-				elseif (indexY = 3 or indexY = 7)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 255)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 255)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
-				elseif (indexY = 4 or indexY = 6)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 255)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 155)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
-				elseif (indexY = 5)
-					SetSpriteColorRed(WallSprite[indexX, indexY], 255)
-					SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
-					SetSpriteColorBlue(WallSprite[indexX, indexY], 0)
-				endif
-
-				screenX = screenX + GetSpriteWidth(WallSprite[0, 0])
-			next indexX
-			
-			screenX = 0 + (36/2)
-			screenY = screenY + 18
-		next indexY
+	if (Level = 0)
+		PlayNewMusic(1, 1)
+	elseif (Level = 4)
+		PlayNewMusic(2, 1)
+	elseif (Level = 7)
+		PlayNewMusic(3, 1)
+	elseif (Level = 9)
+		PlayNewMusic(4, 1)
 	endif
+/*
+	for indexY = 0 to 10
+		for indexX = 0 to 9
+			if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) then DeleteSprite(WallSprite[indexX, indexY])
+		next indexX
+	next indexY
+*/
+	for indexY = 0 to 10
+		for indexX = 0 to 9
+			select Level
+				case 0:
+					if (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase	
+				
+				case 1:
+					if (indexY = 4 or indexY = 6)
+						if ( mod(indexX, 2) = 0)
+							InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+						endif
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+					
+				case 2:
+					if (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase	
+			
+				case 3:
+					if (indexY = 3 or indexY = 7)
+						if ( mod(indexX, 2) = 0)
+							InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+						endif
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+					
+				case 4:
+					if (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+					
+				case 5:
+					if (indexY = 2 or indexY = 8)
+						if ( mod(indexX, 2) = 0)
+							InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+						endif
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+				
+				case 6:
+					if (indexY = 2 or indexY = 8)
+						InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+					
+				case 7:
+					if (indexY = 1 or indexY = 9)
+						if ( mod(indexX, 2) = 0)
+							InitializeBrickForNewLevel(5, indexX, indexY, screenX, screenY)
+						endif
+					elseif (indexY = 2 or indexY = 8)
+						InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+				
+				case 8:
+					if (indexY = 1 or indexY = 9)
+						InitializeBrickForNewLevel(5, indexX, indexY, screenX, screenY)
+					elseif (indexY = 2 or indexY = 8)
+						InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+				
+				case 9:
+					if (indexY = 0 or indexY = 10)
+						if ( mod(indexX, 2) = 0)
+							InitializeBrickForNewLevel(6, indexX, indexY, screenX, screenY)
+						endif
+					elseif (indexY = 1 or indexY = 9)
+						InitializeBrickForNewLevel(5, indexX, indexY, screenX, screenY)
+					elseif (indexY = 2 or indexY = 8)
+						InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+				
+				case default:
+					if (indexY = 0 or indexY = 10)
+						InitializeBrickForNewLevel(6, indexX, indexY, screenX, screenY)
+					elseif (indexY = 1 or indexY = 9)
+						InitializeBrickForNewLevel(5, indexX, indexY, screenX, screenY)
+					elseif (indexY = 2 or indexY = 8)
+						InitializeBrickForNewLevel(4, indexX, indexY, screenX, screenY)
+					elseif (indexY = 3 or indexY = 7)
+						InitializeBrickForNewLevel(3, indexX, indexY, screenX, screenY)
+					elseif (indexY = 4 or indexY = 6)
+						InitializeBrickForNewLevel(2, indexX, indexY, screenX, screenY)
+					elseif (indexY = 5)
+						InitializeBrickForNewLevel(1, indexX, indexY, screenX, screenY)
+					endif
+				endcase
+			endselect
+
+			screenX = screenX + 36
+		next indexX
+		
+		screenX = 0 + (36/2)
+		screenY = screenY + 18
+	next indexY
 
 	PaddleScreenX[0] = ScreenWidth/2
 	PaddleScreenY[0] = (ScreenHeight/2) + 258
@@ -107,13 +272,7 @@ function SetupLevel()
 	PaddleDestinationX[1] = (ScreenWidth/2)
 	PaddleDestinationDir[1] = JoyCENTER
 
-	if (GameMode = ChildStoryMode or GameMode = ChildTwoPlayerMode)
-		BallOffsetY = 2
-	elseif (GameMode = TeenStoryMode or GameMode = TeenTwoPlayerMode)
-		BallOffsetY = 6
-	elseif (GameMode = AdultStoryMode or GameMode = AdultTwoPlayerMode)
-		BallOffsetY = 4
-	endif
+	BallOffsetY = BallOffsetYArray[GameMode]
 
 	BallScreenX[0] = ScreenWidth/2
 	BallScreenY[0] = ScreenHeight/2 + (ScreenHeight/3)
@@ -161,31 +320,22 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function RunGameplayCore()
-	index as integer
-/*	if (PerformancePercent > 1)
-		for index = 0 to 1
-			if (BallMovementX[index] < 0)
-				BallMovementX[index] = -5 * PerformancePercent
-			elseif (BallMovementX[index] > 0)
-				BallMovementX[index] = 5 * PerformancePercent
-			endif
-				
-			if (BallMovementY[index] < 0)
-				BallMovementY[index] = -5 * PerformancePercent
-			elseif (BallMovementY[index] > 0)
-				BallMovementY[index] = 5 * PerformancePercent
-			endif
-		next index
+	if ( /*SecretCodeCombined = 9876 and*/ ShiftKeyPressed = TRUE and LastKeyboardChar = 76)
+		NextScreenToDisplay = PlayingScreen
+		ScreenFadeStatus = FadingToBlack
+		DelayAllUserInput = 25
+		exitfunction
 	endif
-*/
+	
+	index as integer
 	if (Platform <> Android and Platform <> iOS)
 		if ( JoystickDirection = JoyLEFT and PaddleScreenX[0] > (40) )
 			PaddleDestinationDir[0] = JoyLEFT
-			dec PaddleScreenX[0], 5
+			dec PaddleScreenX[0], 7
 			SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
 		elseif ( JoystickDirection = JoyRIGHT and PaddleScreenX[0] < (360-40) )
 			PaddleDestinationDir[0] = JoyRIGHT
-			inc PaddleScreenX[0], 5
+			inc PaddleScreenX[0], 7
 			SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
 		else
 			PaddleDestinationDir[0] = JoyCENTER
@@ -344,7 +494,7 @@ function RunGameplayCore()
 			MouseButtonLeft = OFF
 		else
 			if (PaddleDestinationDir[index] = JoyLEFT)
-				dec PaddleScreenX[index], 5
+				dec PaddleScreenX[index], 7
 				if ( PaddleScreenX[index] < (40) ) then PaddleScreenX[index] = (40)
 						
 				SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
@@ -354,7 +504,7 @@ function RunGameplayCore()
 					PaddleDestinationDir[index] = JoyCENTER
 				endif
 			elseif (PaddleDestinationDir[index] = JoyRIGHT)
-				inc PaddleScreenX[index], 5
+				inc PaddleScreenX[index], 7
 				if ( PaddleScreenX[index] > (360-40) ) then PaddleScreenX[index] = (360-40)
 
 				SetSpritePositionByOffset( PaddleSprite[index], PaddleScreenX[index], PaddleScreenY[index] )
@@ -434,23 +584,29 @@ function RunGameplayCore()
 
 						PlaySoundEffect(3)				
 						
-						SetSpritePositionByOffset(WallSprite[indexX, indexY], -9999, -9999)
-
-						inc Score[ballIndex], (10 * Level)
+//						SetSpritePositionByOffset(WallSprite[indexX, indexY], -9999, -9999)
+						if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) then DeleteSprite(WallSprite[indexX, indexY])
+						
+						inc Score[ballIndex], ( 10 * (1+Level) )
 						
 						if ( ballIndex = 1 and (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode) )
 						
 						else
 							SetTextStringOutlined ( ScoreText[ballIndex], str(Score[ballIndex]) )
 						endif
-						
+if (ballIndex = 0)
+	hitX = indexX
+	hitY = indexY
+endif
 						indexX = 10
-						indexY = 5
+						indexY = 11
 						
-						dec WallTotal, 1
+						if (WallTotal > 0) then dec WallTotal, 1
+
 						if (WallTotal = 0)
 							NextScreenToDisplay = PlayingScreen
 							ScreenFadeStatus = FadingToBlack
+							exitfunction
 						endif
 					endif
 				endif

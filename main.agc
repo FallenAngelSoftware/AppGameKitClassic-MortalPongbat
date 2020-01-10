@@ -11,7 +11,7 @@ remstart
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.25         TURBO!
+                                     Retail1 110% - v0.0.27         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.25''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.27''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_25.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_27.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_25-"
+HTML5DataVersion = "MP-v0_0_27-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -89,7 +89,7 @@ else
 	Platform = Web
 	if (MaximumFrameRate = 0)
 		SetVSync( 1 )
- 	else
+	else
 		SetSyncRate( 0, 1 )
 	endif
 	SetScissor( 0, 1, ScreenWidth, ScreenHeight )
@@ -396,6 +396,7 @@ global BallSprite as integer[2]
 global BallScreenX as float[2]
 global BallScreenY as float[2]
 global BallMovementX as float[2]
+global BallXmove as float[2]
 global BallMovementY as float[2]
 
 global BallStillColliding as integer[2]
@@ -403,12 +404,23 @@ global BallStillColliding as integer[2]
 global WallSprite as integer[10, 11]
 global WallTotal as integer
 
+global BallOffsetYArray as float[6]
+BallOffsetYArray[0] = 2
+BallOffsetYArray[1] = 6
+BallOffsetYArray[2] = 4
+BallOffsetYArray[3] = 2
+BallOffsetYArray[4] = 6
+BallOffsetYArray[5] = 4
+
 global BallOffsetY as float
 
 global BallParticle as integer[2, 5]
 global BallParticleScreenX as float[2, 5]
 global BallParticleScreenY as float[2, 5]
 global BallParticleIndex as integer[2]
+
+global FrameSkipWhenPlaying as float
+FrameSkipWhenPlaying = 0
 //==========================================
 
 global PlayerLostALife as integer
@@ -426,14 +438,14 @@ global HighScoreLevel as integer[5, 10]
 global HighScoreScore as integer[5, 10]
 
 global LevelSkip as integer[6]
-LevelSkip[0] = 1
-LevelSkip[1] = 1
-LevelSkip[2] = 1
-LevelSkip[3] = 1
-LevelSkip[4] = 1
-LevelSkip[5] = 1
+LevelSkip[0] = 0
+LevelSkip[1] = 0
+LevelSkip[2] = 0
+LevelSkip[3] = 0
+LevelSkip[4] = 0
+LevelSkip[5] = 0
 global StartingLevel as integer
-StartingLevel = 1
+StartingLevel = 0
 
 ClearHighScores()
 
@@ -675,6 +687,16 @@ global TapCurrentX as integer[2]
 global TapCurrentY as integer[2]
 
 global multiplier as float
+
+
+
+global hitX as integer
+hitX = -1
+global hitY as integer
+hitY = -1
+
+
+
 /*
 Score = 5555
 Level = 5
@@ -771,6 +793,11 @@ do
 		inc SecondsSinceStart, 1
 	endif
 
+	if (FrameCount = 1)
+		FrameSkipWhenPlaying = PerformancePercent
+		FrameSkipWhenPlaying = Round(FrameSkipWhenPlaying)
+	endif
+
 	if (SecretCodeCombined = 2777 and ScreenIsDirty = TRUE)
 		if (ScreenFadeStatus = FadingIdle)
 			if (ScreenToDisplay = AboutScreen)
@@ -800,19 +827,37 @@ do
 		endif
 		
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
-		Print ( "FPS="+str(roundedFPS) )
-		print ( "Perf%"+str(PerformancePercent) )
+		
+		if (  (ScreenToDisplay <> PlayingScreen) or ( mod(FrameCount, FrameSkipWhenPlaying) = 0 )  )
+			Print ( "FPS="+str(roundedFPS) )
+			print ( "Perf%"+str(PerformancePercent) )
+			print ( "FSkip="+str(FrameSkipWhenPlaying) )
 
-		for index = 0 to 1
-			print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
-		next index
+			for index = 0 to 1
+				print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
+			next index
 
-		print ( "Ball0:"+str(BallMovementX[0]) )
-		print ( "Ball1:"+str(BallMovementX[1]) )				
+			print ( "Ball0:"+str(BallMovementX[0]) )
+			print ( "Ball1:"+str(BallMovementX[1]) )
+			
+print ( "WallTotal="+str(WallTotal) )
+print ( "Level="+str(Level) )
+//print ( "hitX="+str(hitX) )
+//print ( "hitY="+str(hitY) )
+							
+		endif
 	endif
 
 	if (ScreenIsDirty = TRUE)
-		Sync()
+		if (ScreenToDisplay <> PlayingScreen)
+			Sync()
+		else
+			if ( mod(FrameCount, FrameSkipWhenPlaying) = 0 )
+				Sync()
+			else
+				Update(0)
+			endif
+		endif
 		ScreenIsDirty = TRUE
 	endif
 

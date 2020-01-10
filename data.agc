@@ -14,7 +14,12 @@ function ClearHighScores( )
 		HighScoreName [ mode, 8 ] = "Oshi Bobo"
 		HighScoreName [ mode, 9 ] = "AppGameKit v2"
 		
-		HighScoreLevel [ mode, 0 ] = 10
+		if (mode < 3)
+			HighScoreLevel [ mode, 0 ] = 11
+		else
+			HighScoreLevel [ mode, 0 ] = 10
+		endif
+		
 		HighScoreLevel [ mode, 1 ] = 9
 		HighScoreLevel [ mode, 2 ] = 8
 		HighScoreLevel [ mode, 3 ] = 7
