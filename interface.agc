@@ -673,9 +673,9 @@ function DrawAllIcons()
 				posY as integer
 
 				if iconScale[index] = 1
-					SetTextSize(textStartIndex, 25)
+					SetTextSize(textStartIndex, 40) // 25)
 				else
-					SetTextSize(textStartIndex, 21)
+					SetTextSize(textStartIndex, 36) // 21)
 				endif
 
 				iconWidthHalf as integer
@@ -688,7 +688,7 @@ function DrawAllIcons()
 
 					SetTextDepth(textStartIndex, 3)
 					dec screenY, ( GetTextTotalHeight(textStartIndex)/2 )
-					SetTextPosition(textStartIndex, IconScreenX[index], screenY)
+					SetTextPosition(textStartIndex, IconScreenX[index], screenY-5)
 
 					inc textStartIndex, 26
 				elseif (  ScreenToDisplay = NewHighScoreNameInputAndroidScreen and MouseButtonLeft = ON and ( MouseScreenY > (IconScreenY[index]-iconHeightHalf) ) and ( MouseScreenY < (IconScreenY[index]+iconHeightHalf) ) and ( MouseScreenX > (IconScreenX[index]-iconWidthHalf) ) and ( MouseScreenX < (IconScreenX[index]+iconWidthHalf) )  )
@@ -704,7 +704,7 @@ function DrawAllIcons()
 				else
 					SetTextDepth(textStartIndex, 3)
 					dec screenY, ( GetTextTotalHeight(textStartIndex)/2 )
-					SetTextPosition(textStartIndex, IconScreenX[index], screenY)
+					SetTextPosition(textStartIndex, IconScreenX[index], screenY-5)
 
 					inc textStartIndex, 26
 				endif

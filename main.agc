@@ -3,15 +3,15 @@
 remstart
 ---------------------------------------------------------------------------------------------------
                                            JeZxLee's
-                                                                   TM
-                             AppGameKit Classic "NightRider" Engine
+                                                              TM
+                                AppGameKit "NightRider" Engine
                                         (Version 2.0.0)
            _  _   __  ____  ____  __   __      ____   __   __ _   ___  ____   __  ____ TM
           ( \/ ) /  \(  _ \(_  _)/ _\ (  )    (  _ \ /  \ (  ( \ / __)(  _ \ / _\(_  _)
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.27         TURBO!
+                                     Retail1 110% - v0.0.28         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.27''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.28''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_27.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_28.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_27-"
+HTML5DataVersion = "MP-v0_0_28-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -421,6 +421,8 @@ global BallParticleIndex as integer[2]
 
 global FrameSkipWhenPlaying as float
 FrameSkipWhenPlaying = 0
+
+global PausedText as integer[2]
 //==========================================
 
 global PlayerLostALife as integer
@@ -688,20 +690,6 @@ global TapCurrentY as integer[2]
 
 global multiplier as float
 
-
-
-global hitX as integer
-hitX = -1
-global hitY as integer
-hitY = -1
-
-
-
-/*
-Score = 5555
-Level = 5
-ScreenToDisplay = NewHighScoreNameInputScreen
-*/
 do
 	inc FrameCount, 1
 		
@@ -840,11 +828,8 @@ do
 			print ( "Ball0:"+str(BallMovementX[0]) )
 			print ( "Ball1:"+str(BallMovementX[1]) )
 			
-print ( "WallTotal="+str(WallTotal) )
-print ( "Level="+str(Level) )
-//print ( "hitX="+str(hitX) )
-//print ( "hitY="+str(hitY) )
-							
+			print ( "WallTotal="+str(WallTotal) )
+			print ( "Level="+str(Level) )			
 		endif
 	endif
 

@@ -864,7 +864,7 @@ function DisplayHowToPlayScreen( )
 
 		if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
 			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3, 0 )
-			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Clear All 9 Levels & Win?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3, 0 )
+			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Clear All 10 Levels & Win?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3, 0 )
 		else
 			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "Do You Have The Skills", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(0*25), 3, 0 )
 			CreateAndInitializeOutlinedText( TRUE, CurrentMinTextIndex, "To Get A New High Score?", 999, 27, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 390+(1*25), 3, 0 )
@@ -1071,7 +1071,6 @@ endfunction
 
 function DisplayAboutScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
-//		SetDelayAllUserInput()
 		DelayAllUserInput = 50
 
 		ClearScreenWithColor ( 0, 0, 0 )
@@ -1239,13 +1238,12 @@ function DisplayPlayingScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 		ClearScreenWithColor ( 0, 0, 0 )
 
-//		SetupForNewGame ( )
-
 		LoadImage ( 11100, "\media\images\playing\BoardBG.png" )
 		BoardBG = CreateSprite ( 11100 )
 		SetSpriteOffset( BoardBG, (GetSpriteWidth(BoardBG)/2) , (GetSpriteHeight(BoardBG)/2) ) 
-		SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
-		SetSpriteDepth ( BoardBG, 4 )
+		SetSpritePositionByOffset( BoardBG, -9999, -9999 )
+		SetSpriteDepth ( BoardBG, 2 )
+		SetSpriteColorAlpha(BoardBG, 255)
 		
 		LoadImage ( 11150, "\media\images\playing\Paddle.png" )
 		PaddleSprite[0] = CreateSprite ( 11150 )
@@ -1285,18 +1283,18 @@ function DisplayPlayingScreen( )
 		next index
 
 		LoadImage ( 11250, "\media\images\playing\Wall.png" )
-indexY as integer
-indexX as integer
-for indexY = 0 to 10
-	for indexX = 0 to 9
-		if ( GetSpriteExists(WallSprite[indexX, indexY]) = 0 ) 
-			WallSprite[indexX, indexY] = CreateSprite ( 11250 )
-			SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
-			SetSpritePositionByOffset( WallSprite[indexX, indexY], -9999, -9999 )
-			SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
-		endif
-	next indexX
-next indexY
+		indexY as integer
+		indexX as integer
+		for indexY = 0 to 10
+			for indexX = 0 to 9
+				if ( GetSpriteExists(WallSprite[indexX, indexY]) = 0 ) 
+					WallSprite[indexX, indexY] = CreateSprite ( 11250 )
+					SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
+					SetSpritePositionByOffset( WallSprite[indexX, indexY], -9999, -9999 )
+					SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
+				endif
+			next indexX
+		next indexY
 
 		SetupLevel ( )
 
@@ -1341,6 +1339,14 @@ next indexY
 
 		ScoreText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[0]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 640-25, 3, 0)
 
+		if ( GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode and (Platform = Android or Platform = iOS) )
+			PausedText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)+33, 1, 0)
+			PausedText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)-10, 1, 180)
+		else
+			PausedText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)+8, 1, 0)
+			PausedText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, -9999, 1, 180)
+		endif
+
 		if (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode)
 			if (Platform = Android or Platform = iOS)
 				ScoreText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[1]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 25, 3, 180)
@@ -1348,14 +1354,54 @@ next indexY
 				ScoreText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[1]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 25, 3, 0)
 			endif
 		endif
-		
-//		SetSyncRate( 60, 1 )
 	endif
 
-	if (ScreenFadeStatus = FadingIdle) then RunGameplayCore ( )
+	if (ScreenFadeStatus = FadingIdle and GamePaused = FALSE) then RunGameplayCore ( )
+		
+	if (GamePaused = TRUE)		
+		if (MouseButtonLeft = ON)
+			if ( MouseScreenY > 200 and MouseScreenY < (640-200) )
+				if (GamePaused = TRUE)
+					SetSpritePositionByOffset( BoardBG, -9999, -9999 )
+					SetSpriteColorAlpha(BoardBG, 255)
+					SetTextStringOutlined ( PausedText[0], " " )
+					SetTextStringOutlined ( PausedText[1], " " )
+					GamePaused = FALSE
+					MouseButtonLeft = OFF
+					DelayAllUserInput = 50
+					TapCurrentY[0] = -9999
+					TapCurrentY[1] = -9999
+				endif
+			endif
+		endif
+		if (  ( TapCurrentY[0] > 200 and TapCurrentY[0] < (640-200) ) or ( TapCurrentY[1] > 200 and TapCurrentY[1] < (640-200) ) )
+			if (GamePaused = TRUE)
+				SetSpritePositionByOffset( BoardBG, -9999, -9999 )
+				SetSpriteColorAlpha(BoardBG, 255)
+				SetTextStringOutlined ( PausedText[0], " " )
+				SetTextStringOutlined ( PausedText[1], " " )
+				GamePaused = FALSE
+				MouseButtonLeft = OFF
+				DelayAllUserInput = 50
+				TapCurrentY[0] = -9999
+				TapCurrentY[1] = -9999
+			endif
+		endif
+	endif
 		
 	if FadingToBlackCompleted = TRUE
-//		SetSyncRate( 30, 1 )
+		if (WonGame = TRUE)
+			CheckPlayerForHighScore ()
+			if (GameMode = ChildStoryMode)
+				PlayNewMusic(7, 1)
+			elseif (GameMode = TeenStoryMode)
+				PlayNewMusic(8, 1)
+			elseif (GameMode = AdultStoryMode)
+				PlayNewMusic(9, 1)
+			endif
+			
+			NextScreenToDisplay = AboutScreen			
+		endif
 		
 		DeleteImage(11100)
 		DeleteImage(11150)

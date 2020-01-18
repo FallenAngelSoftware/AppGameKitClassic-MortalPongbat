@@ -43,6 +43,8 @@ function SetupForNewGame()
 			PlayNewMusic(4, 1)
 		endif
 	endif
+	
+	GamePaused = FALSE
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -50,11 +52,7 @@ endfunction
 function InitializeBrickForNewLevel(color as integer, indexX as integer, indexY as integer, screenX as float, screenY as float)
 	inc WallTotal, 1
 	if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) 
-//		WallSprite[indexX, indexY] = CreateSprite ( 11250 )
-//		SetSpriteOffset( WallSprite[indexX, indexY], (GetSpriteWidth(WallSprite[indexX, indexY])/2) , (GetSpriteHeight(WallSprite[indexX, indexY])/2) ) 
 		SetSpritePositionByOffset( WallSprite[indexX, indexY], screenX, screenY )
-//		SetSpriteDepth ( WallSprite[indexX, indexY], 3 )
-
 		if (color = 1) // Red
 			SetSpriteColorRed(WallSprite[indexX, indexY], 255)
 			SetSpriteColorGreen(WallSprite[indexX, indexY], 0)
@@ -108,13 +106,7 @@ function SetupLevel()
 	elseif (Level = 9)
 		PlayNewMusic(4, 1)
 	endif
-/*
-	for indexY = 0 to 10
-		for indexX = 0 to 9
-			if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) then DeleteSprite(WallSprite[indexX, indexY])
-		next indexX
-	next indexY
-*/
+
 	for indexY = 0 to 10
 		for indexX = 0 to 9
 			select Level
@@ -298,10 +290,12 @@ function MoveBallWithCollisionDetection()
 		if (BallScreenX[index] < 13)
 			BallScreenX[index] = 13
 			BallMovementX[index] = BallMovementX[index] * -1
+			if (BallMovementX[index] > BallOffsetY) then dec BallMovementX[index], 0.1
 			PlaySoundEffect(2)				
 		elseif ( BallScreenX[index] > (360-13) )
 			BallScreenX[index] = (360-13)
 			BallMovementX[index] = BallMovementX[index] * -1
+			if (BallMovementX[index] < BallOffsetY) then inc BallMovementX[index], 0.1
 			PlaySoundEffect(2)				
 		endif
 		
@@ -361,7 +355,7 @@ function RunGameplayCore()
 			endif
 
 			if (MouseButtonLeft = ON)
-				if (MouseScreenY > ScreenHeight/2)
+				if (MouseScreenY > 640-150) // ScreenHeight/2)
 					PaddleDestinationX[0] = MouseScreenX
 
 					if (PaddleScreenX[0] > MouseScreenX)
@@ -374,7 +368,7 @@ function RunGameplayCore()
 				endif
 			endif		
 		elseif (MouseButtonLeft = ON)
-			if (MouseScreenY < ScreenHeight/2)
+			if (MouseScreenY < 150) // ScreenHeight/2)
 				PaddleDestinationX[1] = MouseScreenX
 
 				if (PaddleScreenX[1] > MouseScreenX)
@@ -386,6 +380,21 @@ function RunGameplayCore()
 				endif
 			endif
 		endif
+/*				
+		if (MouseButtonLeft = ON)
+			if ( MouseScreenY > 200 and MouseScreenY < (640-200) )
+				if (GamePaused = FALSE)
+					GamePaused = TRUE
+					SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+					SetSpriteColorAlpha(BoardBG, 200)
+					SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+					SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+					MouseButtonLeft = OFF
+					DelayAllUserInput = 50
+					PlaySoundEffect(2)
+				endif
+			endif
+		endif		*/
 	elseif (Platform = Android or Platform = iOS)
 		if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
 			if (BallScreenY[1] < BallScreenY[0])
@@ -406,7 +415,7 @@ function RunGameplayCore()
 				PaddleDestinationX[1] = BallScreenX[0]
 			endif
 
-			if (MouseScreenY > ScreenHeight/2)
+			if (MouseScreenY > 640-150) // ScreenHeight/2)
 				PaddleDestinationX[0] = MouseScreenX
 
 				if (PaddleScreenX[0] > MouseScreenX)
@@ -417,9 +426,33 @@ function RunGameplayCore()
 					PaddleDestinationDir[0] = JoyCENTER
 				endif
 			endif
+
+
+
+
+
+			if (MouseButtonLeft = ON)
+				if ( MouseScreenY > 200 and MouseScreenY < (640-200) )
+					if (GamePaused = FALSE)
+						GamePaused = TRUE
+						SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+						SetSpriteColorAlpha(BoardBG, 200)
+						SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+						SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+						MouseButtonLeft = OFF
+						DelayAllUserInput = 50
+						PlaySoundEffect(2)
+					endif
+				endif
+			endif		
+
+
+
+
+		
 		elseif GetMultiTouchExists()=1
 			if GetRawTouchCount(1)=2
-				if ( TapCurrentY[0] < (ScreenHeight/2) )
+				if ( TapCurrentY[0] < 150 ) // (ScreenHeight/2) )
 					PaddleDestinationX[1] = TapCurrentX[0]
 
 					if (PaddleScreenX[1] > TapCurrentX[0])
@@ -429,7 +462,7 @@ function RunGameplayCore()
 					else
 						PaddleDestinationDir[1] = JoyCENTER
 					endif
-				elseif ( TapCurrentY[0] > (ScreenHeight/2) )
+				elseif ( TapCurrentY[0] > 640-150 ) // (ScreenHeight/2) )
 					PaddleDestinationX[0] = TapCurrentX[0]
 
 					if (PaddleScreenX[0] > TapCurrentX[0])
@@ -439,9 +472,21 @@ function RunGameplayCore()
 					else
 						PaddleDestinationDir[0] = JoyCENTER
 					endif
+				elseif ( TapCurrentY[0] > 200 and TapCurrentY[0] < (640-200) )
+					if (GamePaused = FALSE)
+						GamePaused = TRUE
+						SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+						SetSpriteColorAlpha(BoardBG, 200)
+						SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+						SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+						MouseButtonLeft = OFF
+						TapCurrentY[0] = -9999
+						DelayAllUserInput = 50
+						PlaySoundEffect(2)
+					endif				
 				endif
 
-				if ( TapCurrentY[1] < (ScreenHeight/2) )
+				if ( TapCurrentY[1] < 150 ) // (ScreenHeight/2) )
 					PaddleDestinationX[1] = TapCurrentX[1]
 
 					if (PaddleScreenX[1] > TapCurrentX[1])
@@ -451,7 +496,7 @@ function RunGameplayCore()
 					else
 						PaddleDestinationDir[1] = JoyCENTER
 					endif
-				elseif ( TapCurrentY[1] > (ScreenHeight/2) )
+				elseif ( TapCurrentY[1] > 640-150 ) // (ScreenHeight/2) )
 					PaddleDestinationX[0] = TapCurrentX[1]
 
 					if (PaddleScreenX[0] > TapCurrentX[1])
@@ -461,9 +506,21 @@ function RunGameplayCore()
 					else
 						PaddleDestinationDir[0] = JoyCENTER
 					endif
+				elseif ( TapCurrentY[1] > 200 and TapCurrentY[1] < (640-200) )
+					if (GamePaused = FALSE)
+						GamePaused = TRUE
+						SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+						SetSpriteColorAlpha(BoardBG, 200)
+						SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+						SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+						MouseButtonLeft = OFF
+						TapCurrentY[1] = -9999
+						DelayAllUserInput = 50
+						PlaySoundEffect(2)
+					endif				
 				endif
 			elseif (MouseButtonLeft = ON)
-				if (MouseScreenY < ScreenHeight/2)
+				if (MouseScreenY < 150 ) // ScreenHeight/2)
 					PaddleDestinationX[1] = MouseScreenX
 
 					if (PaddleScreenX[1] > MouseScreenX)
@@ -473,7 +530,7 @@ function RunGameplayCore()
 					else
 						PaddleDestinationDir[1] = JoyCENTER
 					endif
-				elseif (MouseScreenY > ScreenHeight/2)
+				elseif (MouseScreenY > 640-150 ) // ScreenHeight/2)
 					PaddleDestinationX[0] = MouseScreenX
 
 					if (PaddleScreenX[0] > MouseScreenX)
@@ -482,7 +539,18 @@ function RunGameplayCore()
 						PaddleDestinationDir[0] = JoyRIGHT
 					else
 						PaddleDestinationDir[0] = JoyCENTER
-					endif
+					endif	
+				elseif ( MouseScreenY > 200 and MouseScreenY < (640-200) )
+					if (GamePaused = FALSE)
+						GamePaused = TRUE
+						SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+						SetSpriteColorAlpha(BoardBG, 200)
+						SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+						SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+						MouseButtonLeft = OFF
+						DelayAllUserInput = 50
+						PlaySoundEffect(2)
+					endif				
 				endif		
 			endif
 		endif	
@@ -584,7 +652,6 @@ function RunGameplayCore()
 
 						PlaySoundEffect(3)				
 						
-//						SetSpritePositionByOffset(WallSprite[indexX, indexY], -9999, -9999)
 						if ( GetSpriteExists(WallSprite[indexX, indexY]) = 1 ) then DeleteSprite(WallSprite[indexX, indexY])
 						
 						inc Score[ballIndex], ( 10 * (1+Level) )
@@ -594,10 +661,7 @@ function RunGameplayCore()
 						else
 							SetTextStringOutlined ( ScoreText[ballIndex], str(Score[ballIndex]) )
 						endif
-if (ballIndex = 0)
-	hitX = indexX
-	hitY = indexY
-endif
+
 						indexX = 10
 						indexY = 11
 						
@@ -605,6 +669,10 @@ endif
 
 						if (WallTotal = 0)
 							NextScreenToDisplay = PlayingScreen
+							if ( (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode) and (Level = 10) )
+								WonGame = TRUE
+								Level = 11
+							endif
 							ScreenFadeStatus = FadingToBlack
 							exitfunction
 						endif

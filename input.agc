@@ -1,7 +1,7 @@
 // "input.agc"...
 
 function GetAllUserInput ( )
-	if (ScreenToDisplay <> PlayingScreen)
+	if (ScreenToDisplay <> PlayingScreen or GamePaused = TRUE)
 		MouseButtonLeft = OFF
 	endif
 
@@ -69,34 +69,27 @@ function GetAllUserInput ( )
 
 	select LastKeyboardChar
 		case 32:
-/*			if (ScreenToDisplay = PlayingScreen)
-				if (GamePaused = -1)
-					GamePaused = 50
-
-					SetDelayAllUserInput()
-
-					SetSpriteVisible ( GamePausedBG, 1 )
-					
-					SetSpriteDepth ( Icon[0], 1 )
-					SetSpriteDepth ( Icon[1], 1 )
-					SetSpriteDepth ( Icon[4], 1 )
-					SetSpriteDepth ( Icon[5], 1 )
-					PauseMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex]) 
-
-				elseif (GamePaused = 0)
-					GamePaused = -50
-
-					SetDelayAllUserInput()
-
-					SetSpriteVisible ( GamePausedBG, 0 )
-					
-					SetSpriteDepth ( Icon[0], 2 )
-					SetSpriteDepth ( Icon[1], 2 )
-					SetSpriteDepth ( Icon[4], 2 )
-					SetSpriteDepth ( Icon[5], 2 )
-					ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex]) 
-				endif		
-			endif */
+			if (ScreenToDisplay = PlayingScreen)
+				if (GamePaused = FALSE)
+					GamePaused = TRUE
+					SetSpritePositionByOffset( BoardBG, ScreenWidth/2, ScreenHeight/2 )
+					SetSpriteColorAlpha(BoardBG, 200)
+					SetTextStringOutlined ( PausedText[0], "GAME PAUSED!" )
+					SetTextStringOutlined ( PausedText[1], "GAME PAUSED!" )
+					MouseButtonLeft = OFF
+					DelayAllUserInput = 50
+					PlaySoundEffect(2)
+				elseif (GamePaused = TRUE)
+					GamePaused = FALSE
+					SetSpritePositionByOffset( BoardBG, -9999, -9999 )
+					SetSpriteColorAlpha(BoardBG, 200)
+					SetTextStringOutlined ( PausedText[0], " " )
+					SetTextStringOutlined ( PausedText[1], " " )
+					MouseButtonLeft = OFF
+					DelayAllUserInput = 50
+					PlaySoundEffect(2)
+				endif
+			endif
 		endcase
 		case 38:
 			JoystickDirection = JoyUP
