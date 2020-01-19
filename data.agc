@@ -48,7 +48,7 @@ endfunction
 function CheckPlayerForHighScore ( )
 	PlayerRankOnGameOver = 999
 
-	playerWithHighestScore as integer
+//	playerWithHighestScore as integer
 	if (Score[0] > Score[1])
 		playerWithHighestScore = 0
 	else

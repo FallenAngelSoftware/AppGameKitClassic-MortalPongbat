@@ -6,6 +6,9 @@ function LoadAllSoundEffects ( )
 	
 	SoundEffect[ 2] = LoadSoundOGG("\media\sound\BallHitOne.ogg")
 	SoundEffect[ 3] = LoadSoundOGG("\media\sound\BallHitTwo.ogg")
+
+	SoundEffect[ 4] = LoadSoundOGG("\media\sound\PaddleDie.ogg")
+	SoundEffect[ 5] = LoadSoundOGG("\media\sound\GameOver.ogg")
 	
 endfunction
 

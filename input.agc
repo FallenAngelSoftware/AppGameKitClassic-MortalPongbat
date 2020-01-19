@@ -79,6 +79,7 @@ function GetAllUserInput ( )
 					MouseButtonLeft = OFF
 					DelayAllUserInput = 50
 					PlaySoundEffect(2)
+					if CurrentlyPlayingMusicIndex > -1 then PauseMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 				elseif (GamePaused = TRUE)
 					GamePaused = FALSE
 					SetSpritePositionByOffset( BoardBG, -9999, -9999 )
@@ -88,6 +89,7 @@ function GetAllUserInput ( )
 					MouseButtonLeft = OFF
 					DelayAllUserInput = 50
 					PlaySoundEffect(2)
+					if CurrentlyPlayingMusicIndex > -1 then ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 				endif
 			endif
 		endcase

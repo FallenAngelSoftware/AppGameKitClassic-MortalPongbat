@@ -11,7 +11,7 @@ remstart
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.28         TURBO!
+                                     Retail1 110% - v0.0.29         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.28''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.29''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_28.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_29.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_28-"
+HTML5DataVersion = "MP-v0_0_29-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0
@@ -353,7 +353,7 @@ global CurrentlyPlayingMusicIndex = -1
 global MusicTrack as integer[MusicTotal]
 LoadAllMusic()
 
-#constant EffectsTotal						4
+#constant EffectsTotal						6
 global SoundEffect as integer[EffectsTotal]
 LoadAllSoundEffects()
 
@@ -402,6 +402,7 @@ global BallMovementY as float[2]
 global BallStillColliding as integer[2]
 
 global WallSprite as integer[10, 11]
+global WallSpriteBackup as integer[10, 11]
 global WallTotal as integer
 
 global BallOffsetYArray as float[6]
@@ -423,6 +424,12 @@ global FrameSkipWhenPlaying as float
 FrameSkipWhenPlaying = 0
 
 global PausedText as integer[2]
+global GameOverText as integer[2]
+
+global PlayerLostLife as integer[2]
+global Lives as integer[2]
+
+global playerWithHighestScore as integer
 //==========================================
 
 global PlayerLostALife as integer
@@ -829,7 +836,9 @@ do
 			print ( "Ball1:"+str(BallMovementX[1]) )
 			
 			print ( "WallTotal="+str(WallTotal) )
-			print ( "Level="+str(Level) )			
+			print ( "Level="+str(Level) )
+			print ( "P0Lives="+str(Lives[0]) )
+			print ( "P1Lives="+str(Lives[1]) )
 		endif
 	endif
 

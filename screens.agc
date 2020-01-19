@@ -1245,24 +1245,6 @@ function DisplayPlayingScreen( )
 		SetSpriteDepth ( BoardBG, 2 )
 		SetSpriteColorAlpha(BoardBG, 255)
 		
-		LoadImage ( 11150, "\media\images\playing\Paddle.png" )
-		PaddleSprite[0] = CreateSprite ( 11150 )
-		SetSpriteOffset( PaddleSprite[0], (GetSpriteWidth(PaddleSprite[0])/2) , (GetSpriteHeight(PaddleSprite[0])/2) ) 
-		SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
-		SetSpriteDepth ( PaddleSprite[0], 3 )
-		SetSpriteColorRed(PaddleSprite[0], 255)
-		SetSpriteColorGreen(PaddleSprite[0], 255)
-		SetSpriteColorBlue(PaddleSprite[0], 255)
-		
-		LoadImage ( 11175, "\media\images\playing\Paddle.png" )
-		PaddleSprite[1] = CreateSprite ( 11175 )
-		SetSpriteOffset( PaddleSprite[1], (GetSpriteWidth(PaddleSprite[1])/2) , (GetSpriteHeight(PaddleSprite[1])/2) ) 
-		SetSpritePositionByOffset( PaddleSprite[1], PaddleScreenX[1], PaddleScreenY[1] )
-		SetSpriteDepth ( PaddleSprite[1], 3 )
-		SetSpriteColorRed(PaddleSprite[1], 158)
-		SetSpriteColorGreen(PaddleSprite[1], 158)
-		SetSpriteColorBlue(PaddleSprite[1], 158)
-		
 		LoadImage ( 11200, "\media\images\playing\Ball.png" )
 		index as integer
 		for index = 0 to 1
@@ -1270,15 +1252,15 @@ function DisplayPlayingScreen( )
 			SetSpriteOffset( BallSprite[index], (GetSpriteWidth(BallSprite[index])/2) , (GetSpriteHeight(BallSprite[index])/2) ) 
 			SetSpritePositionByOffset( BallSprite[index], BallScreenX[index], BallScreenY[index] )
 			SetSpriteDepth ( BallSprite[index], 3 )
-			
+
 			if (index = 0)
-				SetSpriteColorRed(BallSprite[index], 255)
+				SetSpriteColorRed(BallSprite[index],  255)
 				SetSpriteColorGreen(BallSprite[index], 255)
 				SetSpriteColorBlue(BallSprite[index], 255)
 			elseif (index = 1)
-				SetSpriteColorRed(BallSprite[index], 158)
-				SetSpriteColorGreen(BallSprite[index], 158)
-				SetSpriteColorBlue(BallSprite[index], 158)
+				SetSpriteColorRed(BallSprite[index], 255)
+				SetSpriteColorGreen(BallSprite[index], 255)
+				SetSpriteColorBlue(BallSprite[index], 255)
 			endif
 		next index
 
@@ -1295,8 +1277,58 @@ function DisplayPlayingScreen( )
 				endif
 			next indexX
 		next indexY
-
+		
 		SetupLevel ( )
+
+		paddleAlpha as integer
+						
+		LoadImage ( 11150, "\media\images\playing\Paddle.png" )
+		PaddleSprite[0] = CreateSprite ( 11150 )
+		SetSpriteOffset( PaddleSprite[0], (GetSpriteWidth(PaddleSprite[0])/2) , (GetSpriteHeight(PaddleSprite[0])/2) ) 
+		SetSpritePositionByOffset( PaddleSprite[0], PaddleScreenX[0], PaddleScreenY[0] )
+		SetSpriteDepth ( PaddleSprite[0], 3 )
+
+		if (Lives[0] = 5)
+			paddleAlpha = 255
+		elseif (Lives[0] = 4)
+			paddleAlpha = 255 - ( 1 * (255/5) )
+		elseif (Lives[0] = 3)
+			paddleAlpha = 255 - ( 2 * (255/5) )
+		elseif (Lives[0] = 2)
+			paddleAlpha = 255 - ( 3 * (255/5) )
+		elseif (Lives[0] = 1)
+			paddleAlpha = 255 - ( 4 * (255/5) )
+		elseif (Lives[0] = 0 or Lives[0] = -1)
+			paddleAlpha = 0
+		endif
+								
+		SetSpriteColorRed(PaddleSprite[0], paddleAlpha)
+		SetSpriteColorGreen(PaddleSprite[0], paddleAlpha)
+		SetSpriteColorBlue(PaddleSprite[0], paddleAlpha)
+		
+		LoadImage ( 11175, "\media\images\playing\Paddle.png" )
+		PaddleSprite[1] = CreateSprite ( 11175 )
+		SetSpriteOffset( PaddleSprite[1], (GetSpriteWidth(PaddleSprite[1])/2) , (GetSpriteHeight(PaddleSprite[1])/2) ) 
+		SetSpritePositionByOffset( PaddleSprite[1], PaddleScreenX[1], PaddleScreenY[1] )
+		SetSpriteDepth ( PaddleSprite[1], 3 )
+
+		if (Lives[1] = 5)
+			paddleAlpha = 255
+		elseif (Lives[1] = 4)
+			paddleAlpha = 255 - ( 1 * (255/5) )
+		elseif (Lives[1] = 3)
+			paddleAlpha = 255 - ( 2 * (255/5) )
+		elseif (Lives[1] = 2)
+			paddleAlpha = 255 - ( 3 * (255/5) )
+		elseif (Lives[1] = 1)
+			paddleAlpha = 255 - ( 4 * (255/5) )
+		elseif (Lives[1] = 0 or Lives[1] = -1)
+			paddleAlpha = 0
+		endif
+				
+		SetSpriteColorRed(PaddleSprite[1], paddleAlpha)
+		SetSpriteColorGreen(PaddleSprite[1], paddleAlpha)
+		SetSpriteColorBlue(PaddleSprite[1], paddleAlpha)
 
 		for index = 0 to 4
 			BallParticle[0, index] = CreateSprite ( 11200 )
@@ -1304,7 +1336,7 @@ function DisplayPlayingScreen( )
 
 			BallParticleScreenX[0, index] = BallScreenX[0]
 			BallParticleScreenY[0, index] = BallScreenY[0]
-			SetSpritePositionByOffset(BallParticle[0, index], BallParticleScreenX[0, index], BallParticleScreenY[0, index])
+			SetSpritePositionByOffset(BallParticle[0, index], -9999, -9999 ) // BallParticleScreenX[0, index], BallParticleScreenY[0, index])
 
 			SetSpriteDepth ( BallParticle[0, index], 3 )
 			
@@ -1317,13 +1349,13 @@ function DisplayPlayingScreen( )
 
 			BallParticleScreenX[1, index] = BallScreenX[1]
 			BallParticleScreenY[1, index] = BallScreenY[1]
-			SetSpritePositionByOffset(BallParticle[1, index], BallParticleScreenX[1, index], BallParticleScreenY[1, index])
+			SetSpritePositionByOffset(BallParticle[1, index], -9999, -9999 ) // BallParticleScreenX[1, index], BallParticleScreenY[1, index])
 
 			SetSpriteDepth ( BallParticle[1, index], 3 )
 				
-			SetSpriteColorRed(BallParticle[1, index], 158)
-			SetSpriteColorGreen(BallParticle[1, index], 158)
-			SetSpriteColorBlue(BallParticle[1, index], 158)
+			SetSpriteColorRed(BallParticle[1, index], 255)
+			SetSpriteColorGreen(BallParticle[1, index], 255)
+			SetSpriteColorBlue(BallParticle[1, index], 255)
 		next index
 
 		transparency as integer
@@ -1347,6 +1379,14 @@ function DisplayPlayingScreen( )
 			PausedText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, -9999, 1, 180)
 		endif
 
+		if ( GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode and (Platform = Android or Platform = iOS) )
+			GameOverText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)+33, 1, 0)
+			GameOverText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)-10, 1, 180)
+		else
+			GameOverText[0] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, (ScreenHeight/2)+8, 1, 0)
+			GameOverText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, " ", 999, 26, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, -9999, 1, 180)
+		endif
+
 		if (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode)
 			if (Platform = Android or Platform = iOS)
 				ScoreText[1] = CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, str(Score[1]), 999, 22, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 25, 3, 180)
@@ -1356,7 +1396,7 @@ function DisplayPlayingScreen( )
 		endif
 	endif
 
-	if (ScreenFadeStatus = FadingIdle and GamePaused = FALSE) then RunGameplayCore ( )
+	if (ScreenFadeStatus = FadingIdle and GamePaused = FALSE and GameOver = -1) then RunGameplayCore ( )
 		
 	if (GamePaused = TRUE)		
 		if (MouseButtonLeft = ON)
@@ -1371,9 +1411,11 @@ function DisplayPlayingScreen( )
 					DelayAllUserInput = 50
 					TapCurrentY[0] = -9999
 					TapCurrentY[1] = -9999
+					if CurrentlyPlayingMusicIndex > -1 then ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 				endif
 			endif
 		endif
+
 		if (  ( TapCurrentY[0] > 200 and TapCurrentY[0] < (640-200) ) or ( TapCurrentY[1] > 200 and TapCurrentY[1] < (640-200) ) )
 			if (GamePaused = TRUE)
 				SetSpritePositionByOffset( BoardBG, -9999, -9999 )
@@ -1385,10 +1427,23 @@ function DisplayPlayingScreen( )
 				DelayAllUserInput = 50
 				TapCurrentY[0] = -9999
 				TapCurrentY[1] = -9999
+				if CurrentlyPlayingMusicIndex > -1 then ResumeMusicOGG(MusicTrack[CurrentlyPlayingMusicIndex])
 			endif
 		endif
 	endif
+
+	if (GameOver = 50)
+		SetTextStringOutlined ( GameOverText[0], "GAME OVER!" )
+		SetTextStringOutlined ( GameOverText[1], "GAME OVER!" )
+		dec GameOver, 1
+	elseif (GameOver > 0)
+		dec GameOver, 1
 		
+		if (GameOver = 0)
+			ScreenFadeStatus = FadingToBlack
+		endif
+	endif
+								
 	if FadingToBlackCompleted = TRUE
 		if (WonGame = TRUE)
 			CheckPlayerForHighScore ()
@@ -1401,8 +1456,23 @@ function DisplayPlayingScreen( )
 			endif
 			
 			NextScreenToDisplay = AboutScreen			
+		elseif (GameOver = 0)
+			GameOver = -1
+			CheckPlayerForHighScore ()
+			if (playerWithHighestScore = 0 and PlayerRankOnGameOver < 10)
+				if (Platform <> Android and Platform <> iOS)
+					NextScreenToDisplay = NewHighScoreNameInputScreen
+					PlayNewMusic(6, 1)
+				else
+					PlayNewMusic(6, 1)
+					NextScreenToDisplay = NewHighScoreNameInputAndroidScreen
+				endif
+			else
+				PlayNewMusic(0, 1)
+				NextScreenToDisplay = HighScoresScreen
+			endif
 		endif
-		
+				
 		DeleteImage(11100)
 		DeleteImage(11150)
 		DeleteImage(11175)
