@@ -15,8 +15,8 @@ play_app_id=
 admob_app_id=
 snapchat_client_id=
 sdk_version=1
-version_name=0.0.29
-version_number=29
+version_name=0.0.30
+version_number=30
 firebase_config_path=
 url_scheme=
 deep_link=
@@ -64,9 +64,9 @@ FILE_NAME_1=0;data.agc;50;1
 FILE_NAME_2=0;input.agc;81;2
 FILE_NAME_3=0;interface.agc;649;3
 FILE_NAME_4=0;logic.agc;652;4
-FILE_NAME_5=0;main.agc;39;5
-FILE_NAME_6=0;screens.agc;1396;6
-FILE_NAME_7=1;visuals.agc;0;7
+FILE_NAME_5=1;main.agc;0;5
+FILE_NAME_6=0;screens.agc;1059;6
+FILE_NAME_7=0;visuals.agc;89;7
 
 [project]
 description=
