@@ -36,11 +36,9 @@ url_scheme=
 deep_link=
 admob_app_id=
 snapchat_client_id=
-splash_2436_path=
+splash_logo=
 firebase_config_path=
-splash_960_path=
-splash_2048_path=
-splash_1136_path=
+splash_color=
 prov_profile_path=/Users/Jesse/Downloads/Test1.mobileprovision
 
 [html5_settings]
@@ -59,17 +57,18 @@ FILE_6=screens.agc;-1
 FILE_7=visuals.agc;-1
 
 [files]
-FILE_NAME_0=0;audio.agc;14;0
-FILE_NAME_1=0;data.agc;50;1
-FILE_NAME_2=0;input.agc;81;2
-FILE_NAME_3=0;interface.agc;649;3
-FILE_NAME_4=0;logic.agc;652;4
-FILE_NAME_5=1;main.agc;55;5
-FILE_NAME_6=0;screens.agc;511;6
-FILE_NAME_7=0;visuals.agc;89;7
+FILE_NAME_0=0;audio.agc;0;0
+FILE_NAME_1=0;data.agc;0;1
+FILE_NAME_2=0;input.agc;0;2
+FILE_NAME_3=0;interface.agc;0;3
+FILE_NAME_4=0;logic.agc;0;4
+FILE_NAME_5=1;main.agc;0;5
+FILE_NAME_6=0;screens.agc;0;6
+FILE_NAME_7=0;visuals.agc;0;7
 
 [project]
 description=
 
 [watchvariables]
+watch_variable=@Version;
 

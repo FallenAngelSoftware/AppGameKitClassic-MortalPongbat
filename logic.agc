@@ -312,14 +312,6 @@ function SetupLevel()
 	PlayerLostLife[0] = FALSE
 	PlayerLostLife[1] = FALSE
 
-//	if ( (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode) and (Lives[1] = -1) ) then Lives[1] = 5
-/*
-	if ( (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode) and (Lives[1] = -1) )
-		Lives[1] = 5
-	elseif ( (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode) and (Lives[0] = -1) )
-		Lives[0] = 5
-	endif
-*/
 	PaddleScreenX[0] = ScreenWidth/2
 	PaddleScreenY[0] = (ScreenHeight/2) + 258
 	PaddleDestinationX[0] = (Screenwidth/2)
@@ -795,25 +787,21 @@ function RunGameplayCore()
 
 						if (WallTotal = 0)
 							if (GameMode = ChildStoryMode or GameMode = TeenStoryMode or GameMode = AdultStoryMode)
-								if (Lives[1] = -1 or Level = 10)
-									if (Level = 10)
-										WonGame = TRUE
-										Level = 11
-									endif
-									
-									NextScreenToDisplay = PlayingScreen
-									ScreenFadeStatus = FadingToBlack
+								if (Level = 10)
+									WonGame = TRUE
+									Level = 11
 								endif
+								
+								NextScreenToDisplay = PlayingScreen
+								ScreenFadeStatus = FadingToBlack
 							elseif (GameMode = ChildTwoPlayerMode or GameMode = TeenTwoPlayerMode or GameMode = AdultTwoPlayerMode)
-								if (Lives[1] = -1 or Lives[0] = -1 or Level = 10)
-									if (Level = 10)
-										WonGame = TRUE
-										Level = 11
-									endif
-									
-									NextScreenToDisplay = PlayingScreen
-									ScreenFadeStatus = FadingToBlack
+								if (Level = 10)
+									WonGame = TRUE
+									Level = 11
 								endif
+								
+								NextScreenToDisplay = PlayingScreen
+								ScreenFadeStatus = FadingToBlack
 							endif							
 							exitfunction
 						endif

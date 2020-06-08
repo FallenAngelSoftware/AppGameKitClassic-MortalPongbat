@@ -11,7 +11,7 @@ remstart
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.30         TURBO!
+                                     Retail1 110% - v0.0.31         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -429,7 +429,7 @@ global GameOverText as integer[2]
 global PlayerLostLife as integer[2]
 global Lives as integer[2]
 
-global playerWithHighestScore as integer
+global PlayerWithHighestScore as integer
 //==========================================
 
 global PlayerLostALife as integer
@@ -442,9 +442,9 @@ global PlayerRankOnGameOver as integer
 PlayerRankOnGameOver = 999
 
 mode as integer
-global HighScoreName as string[5, 10]
-global HighScoreLevel as integer[5, 10]
-global HighScoreScore as integer[5, 10]
+global HighScoreName as string[6, 10]
+global HighScoreLevel as integer[6, 10]
+global HighScoreScore as integer[6, 10]
 
 global LevelSkip as integer[6]
 LevelSkip[0] = 0
@@ -495,129 +495,6 @@ global ScoreText as integer[2]
 global Level as integer
 global LevelText as integer
 global LevelTextTwo as integer
-
-global FreezeText as integer
-global FreezeTextTwo as integer
-
-global Playfield as integer[6, 13]
-global PlayfieldBackup as integer[6, 13]
-
-global PlayfieldColoredBoxIndex as integer[6, 13]
-global BoxRedSprite as integer[82]
-global BoxRedUsed as integer
-global BoxOrangeSprite as integer[82]
-global BoxOrangeUsed as integer
-global BoxYellowSprite as integer[82]
-global BoxYellowUsed as integer
-global BoxGreenSprite as integer[82]
-global BoxGreenUsed as integer
-global BoxBlueSprite as integer[82]
-global BoxBlueUsed as integer
-global BoxPurpleSprite as integer[82]
-global BoxPurpleUsed as integer
-
-global SelectorSprite as integer
-global PlayerScreenX as integer
-global PlayerScreenY as integer
-global PlayerPlayfieldX as integer
-global PlayerPlayfieldY as integer
-
-global PlayfieldOffsetY as float
-global PlayfieldOffsetYDelay as float
-global PlayfieldOffsetYDelayTime as integer[6]
-PlayfieldOffsetYDelayTime[0] = 3
-PlayfieldOffsetYDelayTime[1] = 1
-PlayfieldOffsetYDelayTime[2] = 2
-PlayfieldOffsetYDelayTime[3] = 3
-PlayfieldOffsetYDelayTime[4] = 1
-PlayfieldOffsetYDelayTime[5] = 2
-
-global BoxBlackSprite as integer[6]
-
-global BoxWhiteSprite as integer[82]
-global BoxWhiteUsed as integer
-
-global PlayerMovementDelay as integer
-
-global PlayerMovePlayfieldX as integer
-global PlayerMovePlayfieldY as integer
-
-global PlayerSwapPieceOne as integer
-global PlayerSwapPieceTwo as integer
-global PlayerSwapPieceOneScreenX as integer
-global PlayerSwapPieceTwoScreenX as integer
-global PlayerSwapPiecesScreenY as integer
-global PlayerSwapMovement as integer
-
-global PlayerSwapOnePlayfieldX as integer
-global PlayerSwapOnePlayfieldY as integer
-global PlayerSwapTwoPlayfieldX as integer
-global PlayerSwapTwoPlayfieldY as integer
-
-global PlayerSwapDirection as integer
-
-global PiecesFell as integer
-
-global MatchFlashTimer as integer
-
-global NumberOfPiecesCleared as integer
-global NumberOfMatchesCleared as integer
-
-global TimeFreezeTimer as integer
-
-global NumberOfCombos as integer
-
-global ComboTakenCareOf as integer
-
-global LevelAdvancePieceCounter as integer
-global LevelAdvancePieceCount as integer[6]
-LevelAdvancePieceCount[0] = 30
-LevelAdvancePieceCount[1] = 60
-LevelAdvancePieceCount[2] = 45
-LevelAdvancePieceCount[3] = 30
-LevelAdvancePieceCount[4] = 60
-LevelAdvancePieceCount[5] = 45
-
-global StagingScore as integer
-global StagingLevelAdvance as integer
-
-global PlayfieldTopSprite as integer
-global PlayfieldRightSprite as integer
-global PlayfieldBottomSprite as integer
-global PlayfieldLeftSprite as integer
-
-global IntroEarthBGSprite as integer
-global IntroEarthSprite as integer
-global IntroShuttleSprite as integer
-global IntroStarsSprite as integer[5]
-
-global IntroAnimationStep as integer
-global IntroEarthScale as float
-global IntroShuttleScale as float
-global IntroShuttleScreenX as integer
-global IntroShuttleScreenY as integer
-global IntroStarsScale as float[5]
-
-global EndingEarthBGSprite as integer
-global EndingEarthSprite as integer
-global EndingShuttleSprite as integer
-global EndingStarsSprite as integer[5]
-global EndingAsteroidSprite as integer
-global EndingExplosionSprite as integer
-
-global EndingAnimationStep as integer
-global EndingEarthScale as float
-global EndingEarthScreenX as integer
-global EndingEarthScreenY as integer
-global EndingShuttleScale as float
-global EndingShuttleScreenX as integer
-global EndingShuttleScreenY as integer
-global EndingStarsScale as float[5]
-global EndingAsteroidScale as float
-global EndingAsteroidScreenX as integer
-global EndingAsteroidScreenY as integer
-global EndingExplosionScale as float
-global EndingExplosionAlpha as integer
 
 global GamePausedBG as integer
 global GamePaused as integer
@@ -735,16 +612,8 @@ do
 			DisplayAboutScreen()
 		endcase
 
-		case IntroSceneScreen:
-			DisplayIntroSceneScreen()
-		endcase
-
 		case PlayingScreen:
 			DisplayPlayingScreen()
-		endcase
-
-		case EndingSceneScreen:
-			DisplayEndingSceneScreen()
 		endcase
 
 		case NewHighScoreNameInputScreen:
@@ -823,22 +692,10 @@ do
 		
 		SetPrintColor (PrintColor, PrintColor, PrintColor)
 		
-		if (  (ScreenToDisplay <> PlayingScreen) or ( mod(FrameCount, FrameSkipWhenPlaying) = 0 )  )
-			Print ( "FPS="+str(roundedFPS) )
-			print ( "Perf%"+str(PerformancePercent) )
-			print ( "FSkip="+str(FrameSkipWhenPlaying) )
-
-			for index = 0 to 1
-				print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
-			next index
-
-			print ( "Ball0:"+str(BallMovementX[0]) )
-			print ( "Ball1:"+str(BallMovementX[1]) )
-			
-			print ( "WallTotal="+str(WallTotal) )
-			print ( "Level="+str(Level) )
-			print ( "P0Lives="+str(Lives[0]) )
-			print ( "P1Lives="+str(Lives[1]) )
+		if (ScreenToDisplay <> PlayingScreen)
+			DisplayDebugInfo()
+		elseif ( mod(FrameCount, FrameSkipWhenPlaying) = 0 )
+			DisplayDebugInfo()
 		endif
 	endif
 

@@ -83,6 +83,27 @@ endfunction
 
 //------------------------------------------------------------------------------------------------------------
 
+function DisplayDebugInfo( )
+	Print ( "FPS="+str(roundedFPS) )
+	print ( "Perf%"+str(PerformancePercent) )
+	print ( "FSkip="+str(FrameSkipWhenPlaying) )
+
+	index as integer
+	for index = 0 to 1
+		print ( "TX"+str(1+index)+":"+str(TapCurrentX[index])+"/TY"+str(1+index)+":"+str(TapCurrentY[index]) )
+	next index
+
+	print ( "Ball0:"+str(BallMovementX[0]) )
+	print ( "Ball1:"+str(BallMovementX[1]) )
+	
+	print ( "WallTotal="+str(WallTotal) )
+	print ( "Level="+str(Level) )
+	print ( "P0Lives="+str(Lives[0]) )
+	print ( "P1Lives="+str(Lives[1]) )
+endfunction
+
+//------------------------------------------------------------------------------------------------------------
+
 function DisplaySteamOverlayScreen( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
 
@@ -350,11 +371,7 @@ function DisplayTitleScreen( )
 	endif
 
 	if ThisButtonWasPressed(0) = TRUE
-//		if (GameMode = ChildNeverEndMode or GameMode = TeenNeverEndMode or GameMode = AdultNeverEndMode)
-			NextScreenToDisplay = PlayingScreen
-//		else
-//			NextScreenToDisplay = IntroSceneScreen
-//		endif
+		NextScreenToDisplay = PlayingScreen
 		SetupForNewGame ( )
 		ScreenFadeStatus = FadingToBlack
 	elseif ThisButtonWasPressed(1) = TRUE
@@ -510,12 +527,8 @@ function DisplayOptionsScreen( )
 		SetSpritePositionByOffset( ScreenLine[9], ScreenWidth/2, ScreenHeight-65+13 )
 		SetSpriteColor(ScreenLine[9], 255, 255, 0, 255)
 
-//		if (Platform = Windows)
-//			CreateIcon(8, 180, 527 )
-//		else
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "See You Again", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 495, 3, 0)
-			CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Next Time!", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 490+60, 3, 0)
-//		endif
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "See You Again", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 495, 3, 0)
+		CreateAndInitializeOutlinedText(TRUE, CurrentMinTextIndex, "Next Time!", 999, 60, 255, 255, 255, 255, 0, 0, 0, 1, ScreenWidth/2, 490+60, 3, 0)
 		
 		CreateButton( 6, (ScreenWidth / 2), (ScreenHeight-40+15) )
 				
@@ -1012,12 +1025,7 @@ endfunction
 
 function SetupAboutScreenTexts( )
 	outline as integer
-	
-//	if (WonGame = TRUE)	
-		outline = TRUE
-//	else
-//		outline = FALSE
-//	endif
+	outline = TRUE
 
 	startScreenY as integer
 	startScreenY = 640+15
@@ -1049,13 +1057,13 @@ function SetupAboutScreenTexts( )
 
 		AboutTextsScreenY[index] = startScreenY
 		
-		if (AboutTexts[index] = "Genuine ''Kubuntu 18.04 L.T.S. 64Bit'' Linux")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
+		if (AboutTexts[index] = "Genuine ''openSUSE Tumbleweed KDE 64Bit'' Linux")
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 12, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Hyper-Custom ''JeZxLee'' Pro-Built Desktop")
 			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
-		elseif (AboutTexts[index] = "Intel® Celeron 2.0GHz(2.44GHz Turbo) 4-Core CPU")
+		elseif (AboutTexts[index] = "Intel® Core i5 3.0GHz(3.2GHz Turbo) 4-Core CPU")
 			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 12, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
-		elseif (AboutTexts[index] = "nVidia® GeForce GTX 750 Ti 2GB GDDR5 GPU")
+		elseif (AboutTexts[index] = "nVidia® GeForce GTX 1050 Ti 4GB GDDR5 GPU")
 			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 14, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Samsung® 500GB SSD Hard Drive(OS/Apps)")
 			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 13, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
@@ -1461,7 +1469,7 @@ function DisplayPlayingScreen( )
 		elseif (GameOver = 0)
 			GameOver = -1
 			CheckPlayerForHighScore ()
-			if (playerWithHighestScore = 0 and PlayerRankOnGameOver < 10)
+			if (PlayerWithHighestScore = 0 and PlayerRankOnGameOver < 10)
 				if (Platform <> Android and Platform <> iOS)
 					NextScreenToDisplay = NewHighScoreNameInputScreen
 					PlayNewMusic(6, 1)
@@ -1760,317 +1768,3 @@ function DisplayNewHighScoreNameInputAndroidScreen ( )
 endfunction
 	
 //------------------------------------------------------------------------------------------------------------
-
-function DisplayIntroSceneScreen( )
-/*	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
-		PlayNewMusic(2, 1)
-
-		ClearScreenWithColor ( 0, 0, 0 )
-
-		LoadImage ( 200, "\media\images\story\EarthBG.png" )
-		IntroEarthBGSprite = CreateSprite ( 200 )
-		SetSpriteOffset( IntroEarthBGSprite, (GetSpriteWidth(IntroEarthBGSprite)/2) , (GetSpriteHeight(IntroEarthBGSprite)/2) ) 
-		SetSpritePositionByOffset( IntroEarthBGSprite, (ScreenWidth/2), (ScreenHeight/2) )
-		SetSpriteDepth ( IntroEarthBGSprite, 6 )
-
-		IntroEarthScale = 1
-
-		LoadImage ( 201, "\media\images\story\Earth.png" )
-		IntroEarthSprite = CreateSprite ( 201 )
-		SetSpriteOffset( IntroEarthSprite, (GetSpriteWidth(IntroEarthSprite)/2) , (GetSpriteHeight(IntroEarthSprite)/2) ) 
-		SetSpriteScaleByOffset( IntroEarthSprite, IntroEarthScale, IntroEarthScale )
-		SetSpritePositionByOffset( IntroEarthSprite, (ScreenWidth/2), (ScreenHeight/2) )
-		SetSpriteDepth ( IntroEarthSprite, 4 )
-
-		IntroStarsScale[0] = 0
-		IntroStarsScale[1] = .5
-		IntroStarsScale[2] = 1
-		IntroStarsScale[3] = 1.5
-		IntroStarsScale[4] = 2
-
-		LoadImage ( 203, "\media\images\story\Stars.png" )
-		starIndex as integer
-		for starIndex = 0 to 4
-			IntroStarsSprite[starIndex] = CreateSprite ( 203 )
-			SetSpriteOffset( IntroStarsSprite[starIndex], (GetSpriteWidth(IntroStarsSprite[starIndex])/2) , (GetSpriteHeight(IntroStarsSprite[starIndex])/2) )
-			SetSpriteScaleByOffset( IntroStarsSprite[starIndex], IntroStarsScale[starIndex], IntroStarsScale[starIndex] )
-			SetSpritePositionByOffset( IntroStarsSprite[starIndex], (ScreenWidth/2), (ScreenHeight/2) )
-			SetSpriteDepth ( IntroStarsSprite[starIndex], 5 )
-		next starIndex
-
-		IntroShuttleScale = 0
-		IntroShuttleScreenX = (ScreenWidth/2)
-		IntroShuttleScreenY = (ScreenHeight/2)
-
-		LoadImage ( 202, "\media\images\story\Shuttle1.png" )
-		IntroShuttleSprite = CreateSprite ( 202 )
-		SetSpriteOffset( IntroShuttleSprite, (GetSpriteWidth(IntroShuttleSprite)/2) , (GetSpriteHeight(IntroShuttleSprite)/2) ) 
-		SetSpriteScaleByOffset( IntroShuttleSprite, IntroShuttleScale, IntroShuttleScale )
-		SetSpritePositionByOffset( IntroShuttleSprite, IntroShuttleScreenX, IntroShuttleScreenY )
-		SetSpriteDepth ( IntroShuttleSprite, 3 )
-
-		IntroAnimationStep = -1
-
-		DelayAllUserInput = 20
-
-		ScreenIsDirty = TRUE
-	endif
-
-	for starIndex = 0 to 4
-		if (IntroStarsScale[starIndex] < 0)
-			IntroStarsScale[starIndex] = 2
-		else
-			if (30 / roundedFPS < 1)
-				dec IntroStarsScale[starIndex], .05
-			else
-				dec IntroStarsScale[starIndex], .05 * (30 / roundedFPS)
-			endif
-		endif
-		SetSpriteScaleByOffset( IntroStarsSprite[starIndex], IntroStarsScale[starIndex], IntroStarsScale[starIndex] )
-	next starIndex
-
-	if (IntroAnimationStep = -1)
-		if ( (30 / roundedFPS) < 1 )
-		
-		else
-			PlaySoundEffect(3)
-			IntroAnimationStep = 0
-		endif
-	elseif (IntroAnimationStep = 0)
-		if (IntroShuttleScale < 1)
-			inc IntroShuttleScale, .01 * (30 / roundedFPS)
-			SetSpriteScaleByOffset( IntroShuttleSprite, IntroShuttleScale, IntroShuttleScale )
-		else
-			IntroAnimationStep = 1
-		endif
-	elseif (IntroAnimationStep = 1)
-		if (IntroShuttleScreenX < 360+160)
-			inc IntroShuttleScreenX, 3 * (30 / roundedFPS)
-			dec IntroShuttleScreenY, 2 * (30 / roundedFPS)
-			SetSpritePositionByOffset( IntroShuttleSprite, IntroShuttleScreenX, IntroShuttleScreenY )
-		else
-			IntroShuttleScale = 0
-			IntroShuttleScreenX = (ScreenWidth/2)
-			IntroShuttleScreenY = (ScreenHeight/2)
-			SetSpriteScaleByOffset( IntroShuttleSprite, IntroShuttleScale, IntroShuttleScale )
-			SetSpritePositionByOffset( IntroShuttleSprite, IntroShuttleScreenX, IntroShuttleScreenY )
-
-			PlaySoundEffect(3)
-
-			IntroAnimationStep = 2
-		endif
-	elseif (IntroAnimationStep = 2)
-		if (IntroShuttleScale < 1)
-			inc IntroShuttleScale, .01 * (30 / roundedFPS)
-			SetSpriteScaleByOffset( IntroShuttleSprite, IntroShuttleScale, IntroShuttleScale )
-		else
-			IntroAnimationStep = 3
-		endif
-	elseif (IntroAnimationStep = 3)
-		if (IntroShuttleScreenX < 360+160)
-			if (IntroEarthScale > 0)
-				dec IntroEarthScale, .01 * (30 / roundedFPS)
-				SetSpriteScaleByOffset( IntroEarthSprite, IntroEarthScale, IntroEarthScale )
-			endif
-					
-			inc IntroShuttleScreenX, 3
-			dec IntroShuttleScreenY, 2
-			SetSpritePositionByOffset( IntroShuttleSprite, IntroShuttleScreenX, IntroShuttleScreenY )
-		else
-			NextScreenToDisplay = PlayingScreen
-			SetDelayAllUserInput()
-			ScreenFadeStatus = FadingToBlack
-		endif
-	endif
-	
-	if (DelayAllUserInput = 0)
-		if MouseButtonLeft = ON or LastKeyboardChar = 32 or LastKeyboardChar = 13 or LastKeyboardChar = 27
-			NextScreenToDisplay = PlayingScreen
-			PlaySoundEffect(1)
-			SetDelayAllUserInput()
-			ScreenFadeStatus = FadingToBlack
-		endif
-	endif
-	
-	if FadingToBlackCompleted = TRUE
-		DeleteImage(200)
-		DeleteImage(201)
-		DeleteImage(202)
-		DeleteImage(203)
-	endif
-*/endfunction
-
-//------------------------------------------------------------------------------------------------------------
-
-function DisplayEndingSceneScreen( )
-/*	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
-		ClearScreenWithColor ( 0, 0, 0 )
-
-		LoadImage ( 205, "\media\images\story\MarsBG.png" )
-		EndingEarthBGSprite = CreateSprite ( 205 )
-		SetSpriteOffset( EndingEarthBGSprite, (GetSpriteWidth(EndingEarthBGSprite)/2) , (GetSpriteHeight(EndingEarthBGSprite)/2) ) 
-		SetSpritePositionByOffset( EndingEarthBGSprite, (ScreenWidth/2), (ScreenHeight/2) )
-		SetSpriteDepth ( EndingEarthBGSprite, 6 )
-
-		EndingEarthScale = 1
-		EndingEarthScreenX = -100
-		EndingEarthScreenY = (ScreenHeight/2)
-
-		LoadImage ( 206, "\media\images\story\Earth.png" )
-		EndingEarthSprite = CreateSprite ( 206 )
-		SetSpriteOffset( EndingEarthSprite, (GetSpriteWidth(EndingEarthSprite)/2) , (GetSpriteHeight(EndingEarthSprite)/2) ) 
-		SetSpriteScaleByOffset( EndingEarthSprite, EndingEarthScale, EndingEarthScale )
-		SetSpritePositionByOffset( EndingEarthSprite, EndingEarthScreenX, EndingEarthScreenY )
-		SetSpriteDepth ( EndingEarthSprite, 4 )
-
-		EndingStarsScale[0] = 0
-		EndingStarsScale[1] = .5
-		EndingStarsScale[2] = 1
-		EndingStarsScale[3] = 1.5
-		EndingStarsScale[4] = 2
-
-		LoadImage ( 208, "\media\images\story\Stars.png" )
-		starIndex as integer
-		for starIndex = 0 to 4
-			EndingStarsSprite[starIndex] = CreateSprite ( 208 )
-			SetSpriteOffset( EndingStarsSprite[starIndex], (GetSpriteWidth(EndingStarsSprite[starIndex])/2) , (GetSpriteHeight(EndingStarsSprite[starIndex])/2) )
-			SetSpriteScaleByOffset( EndingStarsSprite[starIndex], EndingStarsScale[starIndex], EndingStarsScale[starIndex] )
-			SetSpritePositionByOffset( EndingStarsSprite[starIndex], (ScreenWidth/2), (ScreenHeight/2) )
-			SetSpriteDepth ( EndingStarsSprite[starIndex], 5 )
-		next starIndex
-
-		EndingShuttleScale = 0
-		EndingShuttleScreenX = (ScreenWidth/2)
-		EndingShuttleScreenY = (ScreenHeight/2)
-
-		LoadImage ( 207, "\media\images\story\Shuttle2.png" )
-		EndingShuttleSprite = CreateSprite ( 207 )
-		SetSpriteOffset( EndingShuttleSprite, (GetSpriteWidth(EndingShuttleSprite)/2) , (GetSpriteHeight(EndingShuttleSprite)/2) ) 
-		SetSpriteScaleByOffset( EndingShuttleSprite, EndingShuttleScale, EndingShuttleScale )
-		SetSpritePositionByOffset( EndingShuttleSprite, EndingShuttleScreenX, EndingShuttleScreenY )
-		SetSpriteDepth ( EndingShuttleSprite, 3 )
-
-		EndingAsteroidScale = .7
-		EndingAsteroidScreenX = (ScreenWidth/2)
-		EndingAsteroidScreenY = (ScreenHeight/2)
-
-		LoadImage ( 209, "\media\images\story\Asteroid.png" )
-		EndingAsteroidSprite = CreateSprite ( 209 )
-		SetSpriteOffset( EndingAsteroidSprite, (GetSpriteWidth(EndingAsteroidSprite)/2) , (GetSpriteHeight(EndingAsteroidSprite)/2) ) 
-		SetSpriteScaleByOffset( EndingAsteroidSprite, EndingAsteroidScale, EndingAsteroidScale )
-		SetSpritePositionByOffset( EndingAsteroidSprite, EndingAsteroidScreenX, EndingAsteroidScreenY )
-		SetSpriteDepth ( EndingAsteroidSprite, 4 )
-
-		EndingExplosionScale = 0
-		EndingExplosionAlpha = 255
-
-		LoadImage ( 210, "\media\images\story\Explosion.png" )
-		EndingExplosionSprite = CreateSprite ( 210 )
-		SetSpriteOffset( EndingExplosionSprite, (GetSpriteWidth(EndingExplosionSprite)/2) , (GetSpriteHeight(EndingExplosionSprite)/2) ) 
-		SetSpriteScaleByOffset( EndingExplosionSprite, EndingExplosionScale, EndingExplosionScale )
-		SetSpritePositionByOffset( EndingExplosionSprite, EndingAsteroidScreenX, EndingAsteroidScreenY )
-		SetSpriteColorAlpha( EndingExplosionSprite, EndingExplosionAlpha )
-		SetSpriteDepth ( EndingExplosionSprite, 2 )
-
-		EndingAnimationStep = -1
-
-		DelayAllUserInput = 50
-
-		ScreenIsDirty = TRUE
-	endif
-
-	for starIndex = 0 to 4
-		if (EndingStarsScale[starIndex] < 0)
-			EndingStarsScale[starIndex] = 2
-		else			
-			if (30 / roundedFPS < 1)
-				dec EndingStarsScale[starIndex], .05
-			else
-				dec EndingStarsScale[starIndex], .05 * (30 / roundedFPS)
-			endif
-		endif
-		SetSpriteScaleByOffset( EndingStarsSprite[starIndex], EndingStarsScale[starIndex], EndingStarsScale[starIndex] )
-	next starIndex
-
-	if (EndingAnimationStep = -1)
-		if ( (30 / roundedFPS) < 1 )
-		
-		else
-			PlaySoundEffect(3)
-			EndingAnimationStep = 0
-		endif
-	elseif (EndingAnimationStep = 0)
-		if (EndingShuttleScale < 1)
-			inc EndingShuttleScale, .01 * (30 / roundedFPS)
-			SetSpriteScaleByOffset( EndingShuttleSprite, EndingShuttleScale, EndingShuttleScale )
-
-			inc EndingAsteroidScreenX, 3 * (30 / roundedFPS)
-			inc EndingAsteroidScreenY, 1 * (30 / roundedFPS)
-			SetSpritePositionByOffset( EndingAsteroidSprite, EndingAsteroidScreenX, EndingAsteroidScreenY )
-
-			dec EndingAsteroidScale, .005 * (30 / roundedFPS)
-			SetSpriteScaleByOffset( EndingAsteroidSprite, EndingAsteroidScale, EndingAsteroidScale )
-		else
-			PlaySoundEffect(11)
-			SetSpritePositionByOffset( EndingExplosionSprite, EndingAsteroidScreenX, EndingAsteroidScreenY )
-			EndingAnimationStep = 1
-		endif
-	elseif (EndingAnimationStep = 1)
-		if (EndingExplosionScale < 20)
-			inc EndingExplosionScale, 1 * (30 / roundedFPS)
-			
-			SetSpriteScaleByOffset( EndingExplosionSprite, EndingExplosionScale, EndingExplosionScale )
-		else
-			
-			EndingAnimationStep = 2
-		endif
-	elseif (EndingAnimationStep = 2)
-		if (EndingExplosionAlpha > 0)
-			dec EndingExplosionAlpha, 5 * (30 / roundedFPS)
-		
-			SetSpriteColorAlpha( EndingExplosionSprite, EndingExplosionAlpha )
-		else
-			PlaySoundEffect(3)
-			EndingAnimationStep = 3
-		endif
-	elseif (EndingAnimationStep = 3)
-		if (EndingShuttleScale > 0)
-			dec EndingShuttleScale, .01 * (30 / roundedFPS)
-			SetSpriteScaleByOffset( EndingShuttleSprite, EndingShuttleScale, EndingShuttleScale )
-
-			dec EndingShuttleScreenX, 1 * (30 / roundedFPS)
-			SetSpritePositionByOffset( EndingShuttleSprite, EndingShuttleScreenX, EndingShuttleScreenY )
-			
-			inc EndingEarthScreenX, 2 * (30 / roundedFPS)
-			SetSpritePositionByOffset( EndingEarthSprite, EndingEarthScreenX, EndingEarthScreenY )
-		else
-			SetDelayAllUserInput()
-			ScreenFadeStatus = FadingToBlack
-		endif
-	endif
-
-	if (DelayAllUserInput = 0)
-		if MouseButtonLeft = ON or LastKeyboardChar = 32 or LastKeyboardChar = 13 or LastKeyboardChar = 27
-			PlaySoundEffect(1)
-			SetDelayAllUserInput()
-			ScreenFadeStatus = FadingToBlack
-		endif
-	endif
-	
-	if FadingToBlackCompleted = TRUE
-		DeleteImage(205)
-		DeleteImage(206)
-		DeleteImage(207)
-		DeleteImage(208)
-		DeleteImage(209)
-		DeleteImage(210)
-		
-		if (PlayingSyncRate = 60)
-			PlayNewMusic(10, 1)
-		else
-			PlayNewMusic(9, 1)
-		endif
-		
-		NextScreenToDisplay = AboutScreen
-	endif						
-*/endfunction
