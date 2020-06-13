@@ -348,12 +348,12 @@ function MoveBallWithCollisionDetection()
 		inc BallScreenY[index], BallMovementY[index]
 		
 		if (BallScreenX[index] < 13)
-			BallScreenX[index] = 13
+			BallScreenX[index] = 13+5
 			BallMovementX[index] = BallMovementX[index] * -1
 			if (BallMovementX[index] > BallOffsetY) then dec BallMovementX[index], 0.34
 			PlaySoundEffect(2)				
 		elseif ( BallScreenX[index] > (360-13) )
-			BallScreenX[index] = (360-13)
+			BallScreenX[index] = (360-13-5)
 			BallMovementX[index] = BallMovementX[index] * -1
 			if (BallMovementX[index] < BallOffsetY) then inc BallMovementX[index], 0.34
 			PlaySoundEffect(2)				

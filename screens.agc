@@ -1018,6 +1018,10 @@ function DisplayHighScoresScreen( )
 	DrawAllArrowSets()
 	
 	if FadingToBlackCompleted = TRUE
+		if (PlayerRankOnGameOver < 10)
+			if (OnMobile = TRUE) then SetOrientationAllowed( 1, 0, 0, 0 )
+			PlayerRankOnGameOver = 999
+		endif
 	endif
 endfunction
 
@@ -1057,8 +1061,8 @@ function SetupAboutScreenTexts( )
 
 		AboutTextsScreenY[index] = startScreenY
 		
-		if (AboutTexts[index] = "Genuine ''openSUSE Tumbleweed KDE 64Bit'' Linux")
-			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 12, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
+		if (AboutTexts[index] = "Genuine ''openSUSE Tumbleweed K.D.E. 64Bit'' Linux")
+			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 10, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Hyper-Custom ''JeZxLee'' Pro-Built Desktop")
 			CreateAndInitializeOutlinedText(outline, CurrentMinTextIndex, AboutTexts[index], 999, 15, 255, 255, AboutTextsBlue[index], 255, 0, 0, 0, 1, ScreenWidth/2, AboutTextsScreenY[index], 3, 0)
 		elseif (AboutTexts[index] = "Intel® Core i5 3.0GHz(3.2GHz Turbo) 4-Core CPU")
@@ -1637,6 +1641,13 @@ endfunction
 
 function DisplayNewHighScoreNameInputAndroidScreen ( )
 	if ScreenFadeStatus = FadingFromBlack and ScreenFadeTransparency = 255
+
+Score[0] = 5555
+Score[1] = 99999
+Level = 9	
+CheckPlayerForHighScore()
+		if (PlayerWithHighestScore = 1) then SetOrientationAllowed( 0, 1, 0, 0 )		
+				
 		ClearScreenWithColor ( 0, 0, 0 )
 
 		PreRenderCharacterIconTexts()

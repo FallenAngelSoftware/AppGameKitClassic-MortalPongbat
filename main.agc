@@ -11,7 +11,7 @@ remstart
           / \/ \( () ))   /  )( /    \/ (_/\   ) __/( () )/    /( (_ \ ) _ (/    \ )(  
           \_)(_/ \__/(__\_) (__)\_/\_/\____/  (__)   \__/ \_)__) \___/(____/\_/\_/(__) 
 
-                                     Retail1 110% - v0.0.31         TURBO!
+                                     Retail1 110% - v0.0.33         TURBO!
 
 ---------------------------------------------------------------------------------------------------     
 
@@ -33,11 +33,11 @@ remend
 #include "visuals.agc"
 
 global GameVersion as string
-GameVersion = "''Retail1 110% - Turbo! - v0.0.30''"
+GameVersion = "''Retail1 110% - Turbo! - v0.0.33''"
 global DataVersion as string
-DataVersion = "MP110-Retail1-110-Turbo-v0_0_30.cfg"
+DataVersion = "MP110-Retail1-110-Turbo-v0_0_33.cfg"
 global HTML5DataVersion as String
-HTML5DataVersion = "MP-v0_0_30-"
+HTML5DataVersion = "MP-v0_0_33-"
 
 global MaximumFrameRate as integer
 MaximumFrameRate = 0

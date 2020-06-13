@@ -519,31 +519,6 @@ endfunction
 //------------------------------------------------------------------------------------------------------------
 
 function PreRenderCharacterIconTexts ( )
-	for index = 8 to 76
-		Icon[index] = CreateSprite ( 130 )
-		SetSpriteDepth ( Icon[index], 3 )
-		SetSpriteOffset( Icon[index], (GetSpriteWidth(Icon[index])/2) , (GetSpriteHeight(Icon[index])/2) ) 
-		SetSpritePositionByOffset( Icon[index], -9999, -9999 )
-	next index
-	
-	index as integer = 20000
-	text as string = " "
-	font as integer = 999
-	size as integer = 25
-	red as integer = 0
-	green as integer = 0
-	blue as integer = 0
-	alpha as integer = 255
-	outRed as integer = 200
-	outGreen as integer = 200
-	outBlue as integer = 200
-	horizontalJustification as integer = 1
-	screenX as integer
-	screenX = -9999
-	screenY as integer
-	screenY = -9999
-	depth as integer = 3
-
 	IconText[10] = "A"
 	IconText[11] = "B"
 	IconText[12] = "C"
@@ -610,25 +585,52 @@ function PreRenderCharacterIconTexts ( )
 	IconText[73] = " "
 	IconText[74] = "<"
 
-	iconTextIndex as integer
-	for iconTextIndex = 0 to 75
-		screenY = IconScreenY[iconTextIndex]
-		screenX = IconScreenX[iconTextIndex]
-
-		text = IconText[iconTextIndex]
-
-		if GetTextExists(index) = 0 then CreateText( index, text )
-		SetTextFont( index, font ) 
-		SetTextSize(index, size)
-		SetTextColor(index, red, green, blue, alpha)
-		SetTextAlignment(index, horizontalJustification)
-		SetTextPosition(index, screenX, screenY)
-		SetTextDepth(index, depth)
-		SetTextVisible( index, 1 )
+	indexText as integer
+	indexText = 20000
 		
-		inc index, 26
-	next iconTextIndex
+	index as integer
+	for index = 10 to 74
+		originalSprite as integer
+		originalSprite = CreateSprite ( 130 )
+		SetSpriteDepth(originalSprite, 1)
+		DrawSprite(originalSprite)
 
+		text as string = " "
+		text = IconText[index]
+
+		if GetTextExists(indexText) = 0 then  CreateText( indexText+index, text )
+		SetTextFont( indexText+index, 999 ) 
+		SetTextSize(indexText+index, 38)
+		SetTextColor(indexText+index, 0, 0, 0, 255)
+		SetTextAlignment(indexText+index, 1)
+		SetTextPosition(  indexText+index, ( GetSpriteWidth(originalSprite)/2 ), -5  )
+		SetTextDepth(indexText+index, 0)
+		SetTextVisible( indexText+index, 1 )
+		DrawText(indexText+index)
+		
+		spr_render as integer
+		spr_render=CreateRenderImage(GetSpriteWidth(originalSprite), GetSpriteHeight(originalSprite), 0, 0) 
+		SetRenderToImage (spr_render,0) 
+	
+		screenOriginalWidth as integer
+		screenOriginalHeight as integer
+		screenOriginalWidth = GetVirtualWidth()
+		screenOriginalHeight = GetVirtualHeight()
+		SetVirtualResolution( GetSpriteWidth(originalSprite), GetSpriteHeight(originalSprite))
+	
+		Render()
+	
+		DeleteSprite(originalSprite)
+		DeleteText(indexText+index)
+	
+		SetVirtualResolution( screenOriginalWidth, screenOriginalHeight)
+		 
+		SetRenderToScreen()
+			 
+		Icon[index]=CreateSprite(spr_render)
+		SetSpriteTransparency(Icon[index], 1)
+		SetSpriteDepth(Icon[index], 3)	
+	next index
 endfunction
 
 //------------------------------------------------------------------------------------------------------------
@@ -652,17 +654,17 @@ endfunction
 function DrawAllIcons()
 	if NumberOfIconsOnScreen = 0 then exitfunction
 	
+	SetSpriteScaleByOffset(NameInputCharSprite, 3, 3)
+	
 	index as integer
-	textStartIndex  as integer
-	textStartIndex = 20000
 	for index = 0 to NumberOfIconsOnScreen
 		if IconSprite[index] > -1
 			SetSpriteScale(Icon[IconSprite[index]], IconScale[index], IconScale[index])
-			SetSpriteOffset( Icon[IconSprite[index]], (GetSpriteWidth(Icon[IconSprite[index]])/2) , (GetSpriteHeight(Icon[IconSprite[index]])/2) ) 
+			SetSpriteOffset( Icon[IconSprite[index]], (GetSpriteWidth(Icon[IconSprite[index]])/2) , (GetSpriteHeight(Icon[IconSprite[index]])/2) )
+			SetSpriteDepth( Icon[IconSprite[index]], 3)
 			SetSpritePositionByOffset( Icon[IconSprite[index]], IconScreenX[index], IconScreenY[index] )
 
 			if (ScreenToDisplay = NewHighScoreNameInputScreen or ScreenToDisplay = NewHighScoreNameInputAndroidScreen)
-				textStartIndex = ( 20000 + (IconSprite[index] * 26) )
 
 				screenY as integer
 				screenY = IconScreenY[index] 
@@ -672,12 +674,6 @@ function DrawAllIcons()
 				posX as integer
 				posY as integer
 
-				if iconScale[index] = 1
-					SetTextSize(textStartIndex, 40) // 25)
-				else
-					SetTextSize(textStartIndex, 36) // 21)
-				endif
-
 				iconWidthHalf as integer
 				iconWidthHalf = GetSpriteWidth(Icon[IconSprite[1]])/2
 				iconHeightHalf as integer
@@ -685,28 +681,13 @@ function DrawAllIcons()
 
 				if (ScreenToDisplay = NewHighScoreNameInputAndroidScreen and MouseButtonLeft = OFF)
 					SetSpritePositionByOffset( NameInputCharSprite, -9999, -9999 )
-
-					SetTextDepth(textStartIndex, 3)
-					dec screenY, ( GetTextTotalHeight(textStartIndex)/2 )
-					SetTextPosition(textStartIndex, IconScreenX[index], screenY-5)
-
-					inc textStartIndex, 26
+					SetSpriteDepth( Icon[IconSprite[index]], 3)
+					SetSpritePositionByOffset( Icon[IconSprite[index]], IconScreenX[index], IconScreenY[index] )
 				elseif (  ScreenToDisplay = NewHighScoreNameInputAndroidScreen and MouseButtonLeft = ON and ( MouseScreenY > (IconScreenY[index]-iconHeightHalf) ) and ( MouseScreenY < (IconScreenY[index]+iconHeightHalf) ) and ( MouseScreenX > (IconScreenX[index]-iconWidthHalf) ) and ( MouseScreenX < (IconScreenX[index]+iconWidthHalf) )  )
 					SetSpritePositionByOffset( NameInputCharSprite, IconScreenX[index], IconScreenY[index]-45 )
-
-					SetTextDepth(textStartIndex, 1)
-					SetTextPosition(textStartIndex, IconScreenX[index], IconScreenY[index]-45)
-				
-					dec screenY, ( GetTextTotalHeight(textStartIndex)/2 )
-					SetTextPosition(textStartIndex, IconScreenX[index], screenY-45)
-
-					inc textStartIndex, 26
+					SetSpriteDepth( Icon[IconSprite[index]], 1)
+					SetSpritePositionByOffset( Icon[IconSprite[index]], IconScreenX[index], IconScreenY[index]-45 )
 				else
-					SetTextDepth(textStartIndex, 3)
-					dec screenY, ( GetTextTotalHeight(textStartIndex)/2 )
-					SetTextPosition(textStartIndex, IconScreenX[index], screenY-5)
-
-					inc textStartIndex, 26
 				endif
 			endif
 		endif	
