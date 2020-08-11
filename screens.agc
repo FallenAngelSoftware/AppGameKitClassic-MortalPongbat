@@ -310,12 +310,15 @@ function DisplayTitleScreen( )
 		startScreenY as integer = 234
 		inc startScreenY, offsetY
 		offsetScreenY as integer = 43
+		if (OnMobile = TRUE) then offsetScreenY = 48
 		CreateButton( 0, (ScreenWidth / 2), startScreenY + (offsetScreenY*0) )
 		CreateButton( 1, (ScreenWidth / 2), startScreenY + (offsetScreenY*1) )
 		CreateButton( 2, (ScreenWidth / 2), startScreenY + (offsetScreenY*2) )
 		CreateButton( 3, (ScreenWidth / 2), startScreenY + (offsetScreenY*3) )
 		CreateButton( 4, (ScreenWidth / 2), startScreenY + (offsetScreenY*4) )
-		CreateButton( 5, (ScreenWidth / 2), startScreenY + (offsetScreenY*5) )
+		if (OnMobile = FALSE)
+			CreateButton( 5, (ScreenWidth / 2), startScreenY + (offsetScreenY*5) )
+		endif
 
 		SetSpritePositionByOffset( ScreenLine[2], ScreenWidth/2, ScreenHeight-165+offsetY+13-12 )
 		SetSpriteColor(ScreenLine[2], 255, 255, 255, 255)
@@ -387,13 +390,13 @@ function DisplayTitleScreen( )
 		NextScreenToDisplay = AboutScreen
 		ScreenFadeStatus = FadingToBlack
 	elseif ThisButtonWasPressed(5) = TRUE
-		if (Platform = Android or Platform = iOS)
-			ExitGame = 1
-		elseif Platform = Web
-			OpenBrowser( "http://www.fallenangelsoftware.com" )
-		else
-			ExitGame = 1
-	 	endif
+		if (OnMobile = FALSE)
+			if Platform = Web
+				OpenBrowser( "http://www.fallenangelsoftware.com" )
+			else
+				ExitGame = 1
+			endif
+		endif
 	elseif ThisIconWasPressed(2) = TRUE
 		MusicVolume = 100
 		EffectsVolume = 100
